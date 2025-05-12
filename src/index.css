@@ -1,0 +1,13 @@
+@font-face {
+  font-family: Pretendard;
+  font-weight: 400;
+  font-style: normal;
+  src: url('./assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+:root {
+  font-family: Pretendard;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
