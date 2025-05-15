@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
 import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
 import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
+import DeleteModal from '../DeleteModal';
 
 interface Props {
   location: string;
@@ -12,8 +14,29 @@ interface Props {
   onDelete: () => void;
 }
 
+/**
+ * @component SidebarListItem
+ * @description 사이드바의 위치 항목 컴포넌트 (삭제 모달 포함)
+ */
 const SidebarListItem = ({ location, selected, hovered, onClick, onHover, onDelete }: Props) => {
+    const [showModal, setShowModal] = useState(false);
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    onDelete();
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
   return (
+    <>
     <Item
       $selected={selected}
       onClick={onClick}
@@ -28,11 +51,20 @@ const SidebarListItem = ({ location, selected, hovered, onClick, onHover, onDele
       </Content>
 
       {hovered && (
-        <DeleteButton onClick={(e) => { e.stopPropagation(); onDelete(); }}>
+        <DeleteButton onClick={handleDeleteClick}>
           <TrashIcon width={24} height={24} />
         </DeleteButton>
       )}
     </Item>
+
+    {showModal && (
+       <DeleteModal
+          locationName={location}
+          onCancel={handleCancel}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+      </>
   );
 };
 

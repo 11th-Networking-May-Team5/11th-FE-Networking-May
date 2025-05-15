@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import SidebarListItem from './SidebarListItem';
+import SidebarListItem from './SidebarListItem.tsx';
 import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
 

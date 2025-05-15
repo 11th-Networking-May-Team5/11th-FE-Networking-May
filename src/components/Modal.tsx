@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import SearchIcon from '../assets/icons/zoom-front-color.svg?react';
@@ -6,16 +6,15 @@ import CheckIcon from '../assets/icons/tick-front-color.svg?react';
 import DeleteIcon  from '../assets/icons/multiply.svg?react';
 import ExampleIcon from '../assets/icons/Clouds.svg?react';
 
+interface Props {
+  onClose: () => void;
+}
+
 /**
  * @component Modal
  * @description 위치 검색 및 선택 모달 컴포넌트
  * @param {() => void} onClose - 모달 닫기 핸들러
  */
-
-interface Props {
-  onClose: () => void;
-}
-
 const Modal = ({ onClose }: Props) => {
   const [keyword, setKeyword] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
