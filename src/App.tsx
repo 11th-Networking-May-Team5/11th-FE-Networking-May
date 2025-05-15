@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
+import Modal from './components/Modal';
 
 const App = () => {
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   return (
     <div className="App">
       <Wrapper>
-        <Sidebar />
+        <Sidebar
+          selectedLocation={selectedLocation}
+          setSelectedLocation={setSelectedLocation}
+          setIsModalOpen={setIsModalOpen}
+      />
         <MainContaier></MainContaier>
       </Wrapper>
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+
     </div>
   );
 };
