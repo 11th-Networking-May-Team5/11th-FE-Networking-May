@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
-import WeatherBox from './components/common/WeatherBox';
+import WeatherTime from './components/WeatherTime/WeatherTime';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <div className="App">
+    <QueryClientProvider client={queryClient}>
       <Wrapper>
         <Sidebar />
         <MainContaier>
-          <WeatherBox title="시간별 현황">
-            <div>날씨이이</div>
-          </WeatherBox>
+          <WeatherTime />
         </MainContaier>
       </Wrapper>
-    </div>
+    </QueryClientProvider>
   );
 };
 
