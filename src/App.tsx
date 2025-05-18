@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
-import Modal from './components/Modal';
+import AddLocationModal from './components/Modal/AddLocationModal';
 
 const App = () => {
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleSelectLocation = (location: string | null) => {
+    setSelectedLocation(location);
+  };
 
   return (
     <div className="App">
       <Wrapper>
         <Sidebar
           selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
-          setIsModalOpen={setIsModalOpen}
-      />
-        <MainContaier></MainContaier>
+          onSelectLocation={handleSelectLocation}
+        />
+        <MainContainer></MainContainer>
       </Wrapper>
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
-
+      <AddLocationModal />
     </div>
   );
 };
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 
-const MainContaier = styled.div`
+const MainContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;

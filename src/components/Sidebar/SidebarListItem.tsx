@@ -3,23 +3,34 @@ import styled from 'styled-components';
 import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
 import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
 import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from '../Modal/DeleteModal';
+import { useLocationStore } from '../../stores/locationStore';
 
 interface Props {
   location: string;
-  selected: boolean;
-  hovered: boolean;
-  onClick: () => void;
-  onHover: (hovered: boolean) => void;
   onDelete: () => void;
 }
 
-/**
- * @component SidebarListItem
- * @description 사이드바의 위치 항목 컴포넌트 (삭제 모달 포함)
- */
-const SidebarListItem = ({ location, selected, hovered, onClick, onHover, onDelete }: Props) => {
-    const [showModal, setShowModal] = useState(false);
+const SidebarListItem = ({ location, onDelete }: Props) => {
+  const selectedLocation = useLocationStore(state => state.selectedLocation);
+  const setSelectedLocation = useLocationStore(
+    state => state.setSelectedLocation,
+  );
+  const [pinnedLocation, setPinnedLocation] = useState<string | null>(null);
+
+  const isSelected = selectedLocation === location;
+  const isPinned = pinnedLocation === location;
+  const [isHovered, setIsHovered] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClick = () => {
+    setSelectedLocation(isSelected ? null : location);
+  };
+
+  const handlePinClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPinnedLocation(isPinned ? null : location);
+  };
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -37,34 +48,38 @@ const SidebarListItem = ({ location, selected, hovered, onClick, onHover, onDele
 
   return (
     <>
-    <Item
-      $selected={selected}
-      onClick={onClick}
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
-    >
-      <Content>
-        <SmallIcon>
-          {selected ? <PinColorIcon /> : <PinIcon />}
-        </SmallIcon>
-        <Text>{location}</Text>
-      </Content>
+      <Item
+        $selected={isSelected}
+        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <Content>
+          <PinButton onClick={handlePinClick}>
+            {isPinned ? (
+              <PinColorIcon width={24} height={24} />
+            ) : (
+              <PinIcon width={24} height={24} />
+            )}
+          </PinButton>
+          <Text>{location}</Text>
+        </Content>
 
-      {hovered && (
-        <DeleteButton onClick={handleDeleteClick}>
-          <TrashIcon width={24} height={24} />
-        </DeleteButton>
-      )}
-    </Item>
+        {isHovered && (
+          <DeleteButton onClick={handleDeleteClick}>
+            <TrashIcon width={24} height={24} />
+          </DeleteButton>
+        )}
+      </Item>
 
-    {showModal && (
-       <DeleteModal
+      {showModal && (
+        <DeleteModal
           locationName={location}
           onCancel={handleCancel}
           onConfirm={handleConfirmDelete}
         />
       )}
-      </>
+    </>
   );
 };
 
@@ -76,14 +91,17 @@ const Item = styled.div<{ $selected: boolean }>`
   align-items: center;
   border-radius: 12px;
   width: 100%;
-  background-color: ${({ $selected }) => ($selected ? '#F2F2F2' : 'transparent')};
+  background-color: ${({ $selected }) =>
+    $selected ? '#F2F2F2' : 'transparent'};
   box-shadow: ${({ $selected }) =>
     $selected ? '-2px 2px 2px 1px rgba(0, 0, 0, 0.10)' : 'none'};
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
   cursor: pointer;
 
   &:hover {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
   }
 `;
 
@@ -94,20 +112,21 @@ const Content = styled.div`
   gap: 12px;
 `;
 
+const PinButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Text = styled.div`
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
-`;
-
-const SmallIcon = styled.div`
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const DeleteButton = styled.button`

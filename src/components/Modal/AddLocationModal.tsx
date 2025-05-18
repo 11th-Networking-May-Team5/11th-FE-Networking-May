@@ -1,21 +1,15 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import SearchIcon from '../assets/icons/zoom-front-color.svg?react';
-import CheckIcon from '../assets/icons/tick-front-color.svg?react';
-import DeleteIcon  from '../assets/icons/multiply.svg?react';
-import ExampleIcon from '../assets/icons/Clouds.svg?react';
+import Modal from './Modal';
+import SearchIcon from '../../assets/icons/zoom-front-color.svg?react';
+import CheckIcon from '../../assets/icons/tick-front-color.svg?react';
+import DeleteIcon from '../../assets/icons/multiply.svg?react';
+import ExampleIcon from '../../assets/icons/Clouds.svg?react';
+import { useLocationStore } from '../../stores/locationStore';
 
-interface Props {
-  onClose: () => void;
-}
-
-/**
- * @component Modal
- * @description 위치 검색 및 선택 모달 컴포넌트
- * @param {() => void} onClose - 모달 닫기 핸들러
- */
-const Modal = ({ onClose }: Props) => {
+const AddLocationModal = () => {
+  const openModal = useLocationStore(state => state.openModal);
+  const closeModal = useLocationStore(state => state.closeModal);
   const [keyword, setKeyword] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -23,82 +17,67 @@ const Modal = ({ onClose }: Props) => {
     { name: 'KFC 광화문점', address: '서울 종로구 세종로 161-1' },
     { name: 'KFC 부산서면점', address: '부산 부산진구 부전동 241-17' },
     { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
   ];
 
+  if (!openModal) return null;
+
   return (
-    <Overlay>
-      <ModalWrapper
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-      >
-        <DeleteButton onClick={onClose}>
-          <DeleteIcon width={24} height={24} />
-        </DeleteButton>
+    <Modal onClose={closeModal}>
+      <DeleteButton onClick={closeModal}>
+        <DeleteIcon width={24} height={24} />
+      </DeleteButton>
 
-        <TitleRow>
-          <StyledIcon><ExampleIcon /></StyledIcon>
-          <TitleText>날씨 위치 추가</TitleText>
-        </TitleRow>
+      <TitleRow>
+        <StyledIcon>
+          <ExampleIcon />
+        </StyledIcon>
+        <TitleText>날씨 위치 추가</TitleText>
+      </TitleRow>
 
-        <InputField>
-          <Label>장소 이름</Label>
-          <InputFieldRow>
-            <Input
-              placeholder="장소를 입력해주세요."
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
-            <StyledSmallIcon><SearchIcon /></StyledSmallIcon>
-          </InputFieldRow>
-        </InputField>
+      <InputField>
+        <Label>장소 이름</Label>
+        <InputFieldRow>
+          <Input
+            placeholder="장소를 입력해주세요."
+            value={keyword}
+            onChange={e => setKeyword(e.target.value)}
+          />
+          <StyledSmallIcon>
+            <SearchIcon />
+          </StyledSmallIcon>
+        </InputFieldRow>
+      </InputField>
 
-        <ResultList>
-          {mockResults.map((item, index) => (
-            <ResultItem
-              key={index}
-              $selected={selectedIndex === index}
-              onClick={() => setSelectedIndex(index)}
-            >
-              <div>
-                <ItemName>{item.name}</ItemName>
-                <ItemAddress>{item.address}</ItemAddress>
-              </div>
-              {selectedIndex === index && (
-                <CheckMark><CheckIcon width={36} height={36} /></CheckMark>
-              )}
-            </ResultItem>
-          ))}
-        </ResultList>
+      <ResultList>
+        {mockResults.map((item, index) => (
+          <ResultItem
+            key={item.name}
+            $selected={selectedIndex === index}
+            onClick={() => setSelectedIndex(index)}
+          >
+            <div>
+              <ItemName>{item.name}</ItemName>
+              <ItemAddress>{item.address}</ItemAddress>
+            </div>
+            {selectedIndex === index && (
+              <CheckMark>
+                <CheckIcon width={36} height={36} />
+              </CheckMark>
+            )}
+          </ResultItem>
+        ))}
+      </ResultList>
 
-        <ButtonWrapper>
-          <ConfirmButton onClick={() => console.log('선택 완료')}>확인</ConfirmButton>
-        </ButtonWrapper>
-      </ModalWrapper>
-    </Overlay>
+      <ButtonWrapper>
+        <ConfirmButton onClick={() => console.log('선택 완료')}>
+          확인
+        </ConfirmButton>
+      </ButtonWrapper>
+    </Modal>
   );
 };
 
-export default Modal;
-
-const Overlay = styled.div`
-  display: flex;
-  background: rgba(41, 46, 46, 0.40);
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  inset: 0;
-`;
-
-const ModalWrapper = styled(motion.div)`
-  position: relative;
-  background: white;
-  border-radius: 16px;
-  padding: 36px 72px;
-  box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.25);
-`;
+export default AddLocationModal;
 
 const DeleteButton = styled.button`
   position: absolute;
