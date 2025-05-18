@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 export const handlers = [
-  http.get(`/weather/hourly`, () => {
+  http.get(import.meta.env.VITE_API_URL + '/weather/hourly', () => {
     return HttpResponse.json({
       code: 'WEATHER-002',
       message: '시간별 날씨 조회 성공',
