@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       svgr(),
-      env.VITE_MODE !== 'development' && mkcert(), // 조건부 플러그인 추가
-    ].filter(Boolean), // false/null 제거
+      env.VITE_MODE !== 'development' && mkcert(),
+    ].filter(Boolean),
   };
 });
