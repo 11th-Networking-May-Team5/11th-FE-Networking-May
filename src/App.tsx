@@ -33,6 +33,7 @@ const MainContaier = styled.div`
   justify-content: center;
   gap: 24px;
   min-height: 100vh;
+  padding: 24px;
 `;
 
 export default App;
