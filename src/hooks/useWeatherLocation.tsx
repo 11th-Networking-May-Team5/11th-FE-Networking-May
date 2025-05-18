@@ -2,6 +2,7 @@ import React from 'react';
 import type { ILocation } from '../types/common';
 
 interface IUuseWeatherLocationReturn {
+  isLoading: boolean;
   location: ILocation | undefined;
 }
 
@@ -18,6 +19,7 @@ const useWeatherLocation = () => {
   );
 
   const [location, setLocation] = React.useState<ILocation>();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   /**
    * TODO: 선택된 장소에 대한 위치 정보 반환
@@ -28,11 +30,13 @@ const useWeatherLocation = () => {
       navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
         setLocation({ latitude, longitude });
+        setIsLoading(false);
       });
     }
-  });
+  }, []);
 
   _return.current = {
+    isLoading,
     location,
   };
 
