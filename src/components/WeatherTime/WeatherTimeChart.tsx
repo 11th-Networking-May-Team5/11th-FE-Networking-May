@@ -4,6 +4,7 @@ import { Line, LineChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 import { getWeatherIcon, type WeatherType } from '../../utils/getWeatherIcon';
 import Chevron from '../../assets/icons/chevron.svg?react';
+import useOverflowSlide from '../../hooks/useOverflowSlide';
 
 interface WeatherTimeChartProps {
   weatherHourlyList?: IHourlyWeather[];
@@ -24,48 +25,22 @@ const LINE_CHART_HEIGHT = 60;
 const WeatherTimeChart = ({ weatherHourlyList }: WeatherTimeChartProps) => {
   const chartOverflowContainerRef = React.useRef<HTMLDivElement>(null);
 
-  const [isShowLeftSlideButton, setIsShowLeftSlideButton] =
-    React.useState(false);
-  const [isShowRightSlideButton, setIsShowRightSlideButton] =
-    React.useState(true);
+  const { isLeftEnd, isRightEnd, handleSlideButtonClick } = useOverflowSlide({
+    chartOverflowContainerRef,
+  });
 
   /**
    *
    */
-  const hanldeSlideButtonClick = (position: 'left' | 'rigth') => {
-    const overflowContainerElement =
-      chartOverflowContainerRef.current as HTMLDivElement;
-
-    if (!overflowContainerElement) {
-      return;
-    }
-
-    const scrollAmount =
-      (position === 'left'
-        ? -overflowContainerElement.clientWidth
-        : overflowContainerElement.clientWidth) * 0.5;
-
-    overflowContainerElement.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth',
-    });
-  };
-
-  /**
-   *
-   */
-  const renderSlideButton = (position: 'left' | 'rigth') => {
+  const renderSlideButton = (position: 'left' | 'right') => {
     const isLeft = position === 'left';
-    const isRight = position === 'rigth';
+    const isRight = position === 'right';
 
     return (
       <SlideButton
         $isLeft={isLeft}
-        $show={[
-          isLeft && isShowLeftSlideButton,
-          isRight && isShowRightSlideButton,
-        ].some(Boolean)}
-        onClick={() => hanldeSlideButtonClick(position)}
+        $show={[isLeft && isLeftEnd, isRight && isRightEnd].some(Boolean)}
+        onClick={() => handleSlideButtonClick(position)}
       >
         <Chevron />
       </SlideButton>
@@ -128,31 +103,6 @@ const WeatherTimeChart = ({ weatherHourlyList }: WeatherTimeChartProps) => {
     );
   };
 
-  //
-  //
-  //
-  React.useEffect(() => {
-    const overflowContainerElement =
-      chartOverflowContainerRef.current as HTMLDivElement;
-
-    if (!overflowContainerElement) {
-      return;
-    }
-
-    const handleScroll = () => {
-      const { scrollLeft, clientWidth } = overflowContainerElement;
-
-      setIsShowLeftSlideButton(scrollLeft > 0);
-      setIsShowRightSlideButton(scrollLeft < clientWidth);
-    };
-
-    overflowContainerElement.addEventListener('scroll', handleScroll);
-
-    return () => {
-      overflowContainerElement.removeEventListener('scroll', handleScroll);
-    };
-  }, [chartOverflowContainerRef]);
-
   return (
     <ChartWrapper>
       {renderSlideButton('left')}
@@ -162,7 +112,7 @@ const WeatherTimeChart = ({ weatherHourlyList }: WeatherTimeChartProps) => {
           {renderAxis()}
         </ChartOverflow>
       </ChartOverflowContainer>
-      {renderSlideButton('rigth')}
+      {renderSlideButton('right')}
     </ChartWrapper>
   );
 };
