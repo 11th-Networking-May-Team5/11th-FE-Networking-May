@@ -43,9 +43,7 @@ export const getWeatherIcon = (weather: WeatherType, date: Date) => {
 
   if (isDay) {
     return DAY_WEATHER_ICON_MAP[weather as keyof typeof DAY_WEATHER_ICON_MAP];
-  } else {
-    return NIGHT_WEATHER_ICON_MAP[
-      weather as keyof typeof NIGHT_WEATHER_ICON_MAP
-    ];
   }
+
+  return NIGHT_WEATHER_ICON_MAP[weather as keyof typeof NIGHT_WEATHER_ICON_MAP];
 };
