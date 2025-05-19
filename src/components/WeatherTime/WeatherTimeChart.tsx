@@ -219,7 +219,7 @@ const SlideButton = styled.button<SlideButtonProps>`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
 `;
 
 export default WeatherTimeChart;
