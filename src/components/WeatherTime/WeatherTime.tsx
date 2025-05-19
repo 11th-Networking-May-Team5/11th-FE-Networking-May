@@ -18,7 +18,7 @@ const WeatherTime = () => {
     enabled: !!location,
   });
 
-  const weatherHourlyList = data?.hourly.slice(0, 12);
+  const weatherHourlyList = data?.hourly;
 
   return (
     <WeatherBox title="시간별 현황">
