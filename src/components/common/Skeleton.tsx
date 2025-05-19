@@ -8,11 +8,12 @@ interface SkeletonProps {
   height?: string;
   minDuration?: number;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 interface SkeletonBoxProps {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }
 
 const skeletonVariants = {
@@ -33,13 +34,15 @@ const skeletonVariants = {
  * - @param height {string} - 높이
  * - @param minDuration {number} - 최소 로딩 시간
  * - @param children {React.ReactNode} - 자식 컴포넌트
+ * - @param style {React.CSSProperties} - 스타일
  */
 const Skeleton = ({
   isLoading,
-  width = '100%',
-  height = '20px',
+  width,
+  height,
   minDuration = 600,
   children,
+  style,
 }: SkeletonProps) => {
   const [isElapsedMinDuration, setIsElapsedMinDuration] = React.useState(false);
   const [isSkeletonVisible, setIsSkeletonVisible] = React.useState(true);
@@ -72,6 +75,7 @@ const Skeleton = ({
       height={height}
       variants={skeletonVariants}
       animate="shimmer"
+      style={style}
     />
   );
 };
@@ -79,9 +83,8 @@ const Skeleton = ({
 const SkeletonBox = styled(motion.div)<SkeletonBoxProps>`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: #e0e0e0;
-  margin-bottom: 12px;
 `;
 
 export default Skeleton;

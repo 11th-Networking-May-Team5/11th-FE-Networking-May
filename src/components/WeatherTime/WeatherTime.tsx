@@ -22,7 +22,7 @@ const WeatherTime = () => {
 
   return (
     <WeatherBox title="시간별 현황">
-      <Skeleton isLoading={isPending} width="100%" height="160px">
+      <Skeleton isLoading={isPending} height="120px" style={{ margin: '12px' }}>
         <WeatherTimeChart weatherHourlyList={weatherHourlyList} />
       </Skeleton>
     </WeatherBox>
