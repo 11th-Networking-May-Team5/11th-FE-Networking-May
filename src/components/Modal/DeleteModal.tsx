@@ -3,14 +3,15 @@ import Modal from './Modal';
 import WarningIcon from '../../assets/icons/Snow.svg?react';
 
 interface DeleteModalProps {
+  open: boolean;
   locationName: string;
   onCancel: () => void;
   onConfirm: () => void;
 }
 
-const DeleteModal = ({ onCancel, onConfirm }: DeleteModalProps) => {
+const DeleteModal = ({ open, onCancel, onConfirm }: DeleteModalProps) => {
   return (
-    <Modal onClose={onCancel}>
+    <Modal open={open} onClose={onCancel} showDeleteButton={false}>
       <Wrapper>
         <ModalTitle>정말로 삭제하시겠습니까?</ModalTitle>
         <IconWrapper>

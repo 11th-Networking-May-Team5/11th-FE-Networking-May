@@ -6,12 +6,12 @@ import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
 import DeleteModal from '../Modal/DeleteModal';
 import { useLocationStore } from '../../stores/locationStore';
 
-interface Props {
+interface SidebarListItemProps {
   location: string;
   onDelete: () => void;
 }
 
-const SidebarListItem = ({ location, onDelete }: Props) => {
+const SidebarListItem = ({ location, onDelete }: SidebarListItemProps) => {
   const selectedLocation = useLocationStore(state => state.selectedLocation);
   const setSelectedLocation = useLocationStore(
     state => state.setSelectedLocation,
@@ -72,13 +72,12 @@ const SidebarListItem = ({ location, onDelete }: Props) => {
         )}
       </Item>
 
-      {showModal && (
-        <DeleteModal
-          locationName={location}
-          onCancel={handleCancel}
-          onConfirm={handleConfirmDelete}
-        />
-      )}
+      <DeleteModal
+        open={showModal}
+        locationName={location}
+        onCancel={handleCancel}
+        onConfirm={handleConfirmDelete}
+      />
     </>
   );
 };

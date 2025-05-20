@@ -2,19 +2,16 @@ import styled from 'styled-components';
 import SidebarListItem from './SidebarListItem.tsx';
 import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
-import { useLocationStore } from '../../stores/locationStore';
+import { useLocationStore } from '../../stores/locationStore.tsx';
+import { useLocations } from '../../hooks/useLocation.tsx';
 
 interface SidebarProps {
   selectedLocation: string | null;
   onSelectLocation: (location: string | null) => void;
 }
 
-const Sidebar = ({
-  selectedLocation: _selectedLocation,
-  onSelectLocation: _onSelectLocation,
-}: SidebarProps) => {
-  const locations = useLocationStore(state => state.locations);
-  const removeLocation = useLocationStore(state => state.removeLocation);
+const Sidebar = ({ selectedLocation, onSelectLocation }: SidebarProps) => {
+  const { locations, removeLocation } = useLocations();
   const openModal = useLocationStore(state => state.openModal);
 
   return (

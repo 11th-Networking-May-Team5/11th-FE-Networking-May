@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import Modal from './Modal';
 import SearchIcon from '../../assets/icons/zoom-front-color.svg?react';
 import CheckIcon from '../../assets/icons/tick-front-color.svg?react';
-import DeleteIcon from '../../assets/icons/multiply.svg?react';
 import ExampleIcon from '../../assets/icons/Clouds.svg?react';
 import { useLocationStore } from '../../stores/locationStore';
 
 const AddLocationModal = () => {
-  const openModal = useLocationStore(state => state.openModal);
+  const isModalOpen = useLocationStore(state => state.isModalOpen);
   const closeModal = useLocationStore(state => state.closeModal);
   const [keyword, setKeyword] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -19,14 +18,10 @@ const AddLocationModal = () => {
     { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
   ];
 
-  if (!openModal) return null;
+  if (!isModalOpen) return null;
 
   return (
-    <Modal onClose={closeModal}>
-      <DeleteButton onClick={closeModal}>
-        <DeleteIcon width={24} height={24} />
-      </DeleteButton>
-
+    <Modal open={isModalOpen} onClose={closeModal} showDeleteButton>
       <TitleRow>
         <StyledIcon>
           <ExampleIcon />
@@ -78,15 +73,6 @@ const AddLocationModal = () => {
 };
 
 export default AddLocationModal;
-
-const DeleteButton = styled.button`
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
 
 const TitleRow = styled.div`
   width: 480px;
