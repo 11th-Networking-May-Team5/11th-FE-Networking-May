@@ -62,8 +62,7 @@ const Sidebar = ({ selectedLocation, onSelectLocation }: SidebarProps) => {
 export default Sidebar;
 
 const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
+  width: ${SIDEBAR_WIDTH};
   width: 248px;
   height: 100vh;
   padding: 48px 16px;
