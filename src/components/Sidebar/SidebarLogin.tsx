@@ -33,7 +33,7 @@ const SidebarLogin = () => {
       <LoginHeader>
         로그인해서 장소를 추가하고
         <br />
-        날씨를 확인하세요
+        날씨를 확인하세요.
       </LoginHeader>
       <LoginForm ref={loginFormRef} onSubmit={handleSubmit}>
         <LoginInput required id="username" type="text" placeholder="아이디" />
@@ -56,6 +56,7 @@ const LoginWrapper = styled.div`
   flex-direction: column;
   padding: 16px;
   box-sizing: border-box;
+  margin-top: 40px;
 `;
 
 const LoginHeader = styled.h2`
