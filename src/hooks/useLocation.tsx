@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useLocations() {
+const useLocations = () => {
   const [locations, setLocations] = useState<string[]>([
     '강남역 1번 출구',
     'RATTHAT',
@@ -24,4 +24,6 @@ export function useLocations() {
     addLocation,
     removeLocation,
   };
-}
+};
+
+export default useLocations;

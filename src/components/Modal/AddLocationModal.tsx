@@ -4,13 +4,20 @@ import Modal from './Modal';
 import SearchIcon from '../../assets/icons/zoom-front-color.svg?react';
 import CheckIcon from '../../assets/icons/tick-front-color.svg?react';
 import ExampleIcon from '../../assets/icons/Clouds.svg?react';
-import { useLocationStore } from '../../stores/locationStore';
 
-const AddLocationModal = () => {
-  const isModalOpen = useLocationStore(state => state.isModalOpen);
-  const closeModal = useLocationStore(state => state.closeModal);
+interface AddLocationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (location: string) => void;
+}
+
+const AddLocationModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+}: AddLocationModalProps) => {
   const [keyword, setKeyword] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const mockResults = [
     { name: 'KFC 광화문점', address: '서울 종로구 세종로 161-1' },
@@ -18,10 +25,16 @@ const AddLocationModal = () => {
     { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
   ];
 
-  if (!isModalOpen) return null;
+  const filteredResults = mockResults.filter(item =>
+    item.name.toLowerCase().includes(keyword.toLowerCase()),
+  );
+
+  const selected = mockResults.find(item => item.name === selectedName);
+
+  if (!isOpen) return null;
 
   return (
-    <Modal open={isModalOpen} onClose={closeModal} showDeleteButton>
+    <Modal open={isOpen} onClose={onClose} showDeleteButton>
       <TitleRow>
         <StyledIcon>
           <ExampleIcon />
@@ -44,17 +57,17 @@ const AddLocationModal = () => {
       </InputField>
 
       <ResultList>
-        {mockResults.map((item, index) => (
+        {filteredResults.map(item => (
           <ResultItem
             key={item.name}
-            $selected={selectedIndex === index}
-            onClick={() => setSelectedIndex(index)}
+            $selected={selectedName === item.name}
+            onClick={() => setSelectedName(item.name)}
           >
             <div>
               <ItemName>{item.name}</ItemName>
               <ItemAddress>{item.address}</ItemAddress>
             </div>
-            {selectedIndex === index && (
+            {selectedName === item.name && (
               <CheckMark>
                 <CheckIcon width={36} height={36} />
               </CheckMark>
@@ -64,7 +77,13 @@ const AddLocationModal = () => {
       </ResultList>
 
       <ButtonWrapper>
-        <ConfirmButton onClick={() => console.log('선택 완료')}>
+        <ConfirmButton
+          onClick={() => {
+            if (selected) {
+              onConfirm(selected.name);
+            }
+          }}
+        >
           확인
         </ConfirmButton>
       </ButtonWrapper>

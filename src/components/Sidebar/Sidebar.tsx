@@ -1,45 +1,61 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import SidebarListItem from './SidebarListItem.tsx';
 import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
-import { useLocationStore } from '../../stores/locationStore.tsx';
-import { useLocations } from '../../hooks/useLocation.tsx';
+import useLocations from '../../hooks/useLocation.tsx';
+import AddLocationModal from '../Modal/AddLocationModal.tsx';
 
 interface SidebarProps {
   selectedLocation: string | null;
-  onSelectLocation: (location: string | null) => void;
+  onSelectLocation: (location: string) => void;
 }
 
 const Sidebar = ({ selectedLocation, onSelectLocation }: SidebarProps) => {
-  const { locations, removeLocation } = useLocations();
-  const openModal = useLocationStore(state => state.openModal);
+  const { locations, addLocation, removeLocation } = useLocations();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddLocation = (location: string) => {
+    addLocation(location);
+    setIsModalOpen(false);
+  };
 
   return (
-    <Wrapper>
-      <TitleRow>
-        <StyledIcon>
-          <MapIcon />
-        </StyledIcon>
-        <TitleText>위치 목록</TitleText>
-      </TitleRow>
+    <>
+      <Wrapper>
+        <TitleRow>
+          <StyledIcon>
+            <MapIcon />
+          </StyledIcon>
+          <TitleText>위치 목록</TitleText>
+        </TitleRow>
 
-      <AddRow onClick={openModal}>
-        <StyledIcon>
-          <PlusIcon />
-        </StyledIcon>
-        <TitleText>추가하기</TitleText>
-      </AddRow>
+        <AddRow onClick={() => setIsModalOpen(true)}>
+          <StyledIcon>
+            <PlusIcon />
+          </StyledIcon>
+          <TitleText>추가하기</TitleText>
+        </AddRow>
 
-      <LocationList>
-        {locations.map(location => (
-          <SidebarListItem
-            key={location}
-            location={location}
-            onDelete={() => removeLocation(location)}
-          />
-        ))}
-      </LocationList>
-    </Wrapper>
+        <LocationList>
+          {locations.map(location => (
+            <SidebarListItem
+              key={location}
+              location={location}
+              isSelected={selectedLocation === location}
+              onClick={() => onSelectLocation(location)}
+              onDelete={() => removeLocation(location)}
+            />
+          ))}
+        </LocationList>
+      </Wrapper>
+
+      <AddLocationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleAddLocation}
+      />
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
-import AddLocationModal from './components/Modal/AddLocationModal';
 
 const App = () => {
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
@@ -19,7 +18,6 @@ const App = () => {
         />
         <MainContainer></MainContainer>
       </Wrapper>
-      <AddLocationModal />
     </div>
   );
 };
