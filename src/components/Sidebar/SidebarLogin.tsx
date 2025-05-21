@@ -8,7 +8,7 @@ const SidebarLogin = () => {
   const loginFormRef = React.useRef<HTMLFormElement>(null);
 
   /**
-   * 로그인 성공시 새로고침 발생
+   *
    */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +25,6 @@ const SidebarLogin = () => {
 
     setErrorMessage(null);
 
-    localStorage.setItem('username', username);
     window.location.reload();
   };
 

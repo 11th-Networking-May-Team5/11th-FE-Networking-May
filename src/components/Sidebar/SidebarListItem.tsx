@@ -24,21 +24,33 @@ const SidebarListItem = ({
 
   const isPinned = pinnedLocation === location;
 
+  /**
+   *
+   */
   const handlePinClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setPinnedLocation(isPinned ? null : location);
   };
 
+  /**
+   *
+   */
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowModal(true);
   };
 
+  /**
+   *
+   */
   const handleConfirmDelete = () => {
     onDelete();
     setShowModal(false);
   };
 
+  /**
+   *
+   */
   const handleCancel = () => {
     setShowModal(false);
   };

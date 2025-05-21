@@ -4,8 +4,36 @@ import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import SidebarList from './SidebarList';
 import { SIDEBAR_WIDTH } from '../../constans';
 import SidebarLogin from './SidebarLogin';
+import useAuth from '../../hooks/useAuth';
 
 const Sidebar = () => {
+  const { isLogin, isLoading, username } = useAuth();
+
+  /**
+   *
+   */
+  const renderLogin = () => {
+    if (isLogin) {
+      return null;
+    }
+
+    return <SidebarLogin />;
+  };
+
+  /**
+   *
+   */
+  const renderList = () => {
+    if (!isLogin) {
+      return null;
+    }
+
+    return <SidebarList />;
+  };
+
+  /**
+   *
+   */
   return (
     <Wrapper>
       <TitleRow>
@@ -14,13 +42,11 @@ const Sidebar = () => {
         </StyledIcon>
         <TitleText>위치 목록</TitleText>
       </TitleRow>
-      {/* <SidebarList /> */}
-      <SidebarLogin />
+      {renderLogin()}
+      {renderList()}
     </Wrapper>
   );
 };
-
-export default Sidebar;
 
 const Wrapper = styled.div`
   flex-shrink: 0;
@@ -29,7 +55,6 @@ const Wrapper = styled.div`
   padding: 48px 16px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
   border-radius: 0 48px 48px 0;
   background: #fff;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
@@ -55,3 +80,5 @@ const StyledIcon = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export default Sidebar;

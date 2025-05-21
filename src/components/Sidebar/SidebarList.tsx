@@ -5,12 +5,18 @@ import AddLocationModal from '../Modal/AddLocationModal.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
 import { useLocationStore } from '../../stores/useLocationStore.tsx';
+import useAuth from '../../hooks/useAuth.tsx';
 
 const SidebarList = () => {
-  const { locations, addLocation, removeLocation } = useLocations();
-  const { selectedLocation, setSelectedLocation } = useLocationStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { locations, addLocation, removeLocation } = useLocations();
+  const { selectedLocation, setSelectedLocation } = useLocationStore();
+  const { username } = useAuth();
+
+  /**
+   *
+   */
   const handleAddLocation = (location: string) => {
     addLocation(location);
     setIsModalOpen(false);
@@ -24,7 +30,9 @@ const SidebarList = () => {
         </StyledIcon>
         <TitleText>추가하기</TitleText>
       </AddRow>
-
+      <ListDescription>
+        <span>{username}님이 추가한 장소</span>
+      </ListDescription>
       <LocationList>
         {locations.map(location => (
           <SidebarListItem
@@ -36,7 +44,6 @@ const SidebarList = () => {
           />
         ))}
       </LocationList>
-
       <AddLocationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -51,9 +58,24 @@ const AddRow = styled.div`
   align-items: center;
   gap: 16px;
   cursor: pointer;
+  margin-top: 40px;
+`;
+
+const ListDescription = styled.div`
+  margin-top: 28px;
+  padding: 8px 8px;
+  width: 100%;
+  border-bottom: 2px solid #eee;
+  box-sizing: border-box;
+
+  > span {
+    font-size: 14px;
+    font-weight: 600;
+  }
 `;
 
 const LocationList = styled.div`
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
