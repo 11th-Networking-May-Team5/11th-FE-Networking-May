@@ -1,7 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
+import { postAuthLogin } from '../../apis/Auth/authLogin';
 
 const SidebarLogin = () => {
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+  const loginFormRef = React.useRef<HTMLFormElement>(null);
+
+  /**
+   * 로그인 성공시 새로고침 발생
+   */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const username = loginFormRef.current?.username.value;
+    const password = loginFormRef.current?.password.value;
+
+    const { success, message } = await postAuthLogin(username, password);
+
+    if (!success) {
+      setErrorMessage(message);
+      return;
+    }
+
+    setErrorMessage(null);
+
+    localStorage.setItem('username', username);
+    window.location.reload();
+  };
+
   return (
     <LoginWrapper>
       <LoginHeader>
@@ -9,11 +36,17 @@ const SidebarLogin = () => {
         <br />
         날씨를 확인하세요
       </LoginHeader>
-      <LoginForm>
-        <LoginInput required type="text" placeholder="아이디" />
-        <LoginInput required type="password" placeholder="비밀번호" />
+      <LoginForm ref={loginFormRef} onSubmit={handleSubmit}>
+        <LoginInput required id="username" type="text" placeholder="아이디" />
+        <LoginInput
+          required
+          id="password"
+          type="password"
+          placeholder="비밀번호"
+        />
         <LoginButton>로그인</LoginButton>
       </LoginForm>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </LoginWrapper>
   );
 };
@@ -65,6 +98,13 @@ const LoginButton = styled.button`
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+`;
+
+const ErrorMessage = styled.span`
+  color: #ed4956;
+  font-size: 12px;
+  margin-top: 12px;
+  padding: 4px;
 `;
 
 export default SidebarLogin;

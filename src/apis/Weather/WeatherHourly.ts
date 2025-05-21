@@ -1,10 +1,7 @@
 import type { ILocation } from '../../types/common';
-import type { IWeatherHourlyResponse } from '../../types/WeatherTime';
 import { axiosInstance } from '../axiosInstance';
 
-export const getWeatherHourly = async (
-  location?: ILocation,
-): Promise<IWeatherHourlyResponse> => {
+export const getWeatherHourly = async (location?: ILocation) => {
   const res = await axiosInstance.get('/weather/hourly', {
     params: {
       latitude: location?.latitude,
@@ -12,5 +9,5 @@ export const getWeatherHourly = async (
     },
   });
 
-  return res.data;
+  return res.data.data;
 };
