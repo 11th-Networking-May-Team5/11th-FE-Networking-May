@@ -8,7 +8,7 @@ export const postAuthLogin = async (
   if (!username || !password) {
     return {
       success: false,
-      message: '아이디와 비밀번호를 입력해주세요.',
+      message: '이름과 비밀번호를 입력해주세요.',
     };
   }
 
@@ -25,7 +25,8 @@ export const postAuthLogin = async (
   } catch {
     return {
       success: false,
-      message: '로그인에 실패했습니다. 다시 시도해주세요.',
+      message:
+        '비밀번호가 일지하지 않습니다. 가입하지 않으셨다면, 새로운 이름을 입력해주세요.',
     };
   }
 };

@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { postAuthLogin } from '../../apis/Auth/authLogin';
 
+interface LoginMessageProps {
+  $error: boolean;
+}
+
 const SidebarLogin = () => {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
@@ -36,7 +40,7 @@ const SidebarLogin = () => {
         날씨를 확인하세요.
       </LoginHeader>
       <LoginForm ref={loginFormRef} onSubmit={handleSubmit}>
-        <LoginInput required id="username" type="text" placeholder="아이디" />
+        <LoginInput required id="username" type="text" placeholder="이름" />
         <LoginInput
           required
           id="password"
@@ -45,7 +49,10 @@ const SidebarLogin = () => {
         />
         <LoginButton>로그인</LoginButton>
       </LoginForm>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <LoginMessage $error={!!errorMessage}>
+        {errorMessage ||
+          '이름과 비밀번호를 입력해서 새로운 계정을 만들어 보세요!'}
+      </LoginMessage>
     </LoginWrapper>
   );
 };
@@ -100,9 +107,10 @@ const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-const ErrorMessage = styled.span`
-  color: #ed4956;
+const LoginMessage = styled.span<LoginMessageProps>`
+  color: ${({ $error }) => $error && '#ed4956'};
   font-size: 12px;
+  line-height: 18px;
   margin-top: 12px;
   padding: 4px;
 `;

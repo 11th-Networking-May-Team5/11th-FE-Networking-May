@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getAuthLogout } from '../../apis/Auth/authLogout';
+import { postAuthLogout } from '../../apis/Auth/authLogout';
 
 const SidebarLogout = () => {
   /**
    *
    */
   const handleLogout = () => {
-    getAuthLogout();
+    postAuthLogout();
 
     localStorage.removeItem('username');
     window.location.reload();
