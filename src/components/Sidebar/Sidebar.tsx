@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import SidebarList from './SidebarList';
 import { SIDEBAR_WIDTH } from '../../constans';
+import SidebarLogin from './SidebarLogin';
 
 const Sidebar = () => {
   return (
@@ -13,7 +14,8 @@ const Sidebar = () => {
         </StyledIcon>
         <TitleText>위치 목록</TitleText>
       </TitleRow>
-      <SidebarList />
+      {/* <SidebarList /> */}
+      <SidebarLogin />
     </Wrapper>
   );
 };
@@ -21,6 +23,7 @@ const Sidebar = () => {
 export default Sidebar;
 
 const Wrapper = styled.div`
+  flex-shrink: 0;
   width: ${SIDEBAR_WIDTH};
   height: 100vh;
   padding: 48px 16px;
