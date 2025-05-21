@@ -5,6 +5,7 @@ import SidebarList from './SidebarList';
 import { SIDEBAR_WIDTH } from '../../constans';
 import SidebarLogin from './SidebarLogin';
 import useAuth from '../../hooks/useAuth';
+import Skeleton from '../common/Skeleton';
 
 const Sidebar = () => {
   const { isLogin, isLoading, username } = useAuth();
@@ -36,14 +37,20 @@ const Sidebar = () => {
    */
   return (
     <Wrapper>
-      <TitleRow>
-        <StyledIcon>
-          <MapIcon />
-        </StyledIcon>
-        <TitleText>위치 목록</TitleText>
-      </TitleRow>
-      {renderLogin()}
-      {renderList()}
+      <Skeleton
+        isLoading={isLoading || !username}
+        height="100%"
+        style={{ margin: '8px 16px' }}
+      >
+        <TitleRow>
+          <StyledIcon>
+            <MapIcon />
+          </StyledIcon>
+          <TitleText>위치 목록</TitleText>
+        </TitleRow>
+        {renderLogin()}
+        {renderList()}
+      </Skeleton>
     </Wrapper>
   );
 };
