@@ -1,6 +1,6 @@
 import { axiosInstance } from '../axiosInstance';
 
-export const getAuthLogout = async () => {
+export const postAuthLogout = async () => {
   try {
     const res = await axiosInstance.post('/auth/logout');
 
