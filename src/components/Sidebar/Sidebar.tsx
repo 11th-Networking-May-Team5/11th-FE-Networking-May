@@ -38,7 +38,7 @@ const Sidebar = () => {
   return (
     <Wrapper>
       <Skeleton
-        isLoading={isLoading || !username}
+        isLoading={isLoading}
         height="100%"
         style={{ margin: '8px 16px' }}
       >
