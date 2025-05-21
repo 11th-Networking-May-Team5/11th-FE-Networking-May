@@ -8,29 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import Skeleton from '../common/Skeleton';
 
 const Sidebar = () => {
-  const { isLogin, isLoading } = useAuth();
-
-  /**
-   *
-   */
-  const renderLogin = () => {
-    if (isLogin) {
-      return null;
-    }
-
-    return <SidebarLogin />;
-  };
-
-  /**
-   *
-   */
-  const renderList = () => {
-    if (!isLogin) {
-      return null;
-    }
-
-    return <SidebarList />;
-  };
+  const { isLoading } = useAuth();
 
   /**
    *
@@ -48,8 +26,8 @@ const Sidebar = () => {
           </StyledIcon>
           <TitleText>위치 목록</TitleText>
         </TitleRow>
-        {renderLogin()}
-        {renderList()}
+        <SidebarLogin />
+        <SidebarList />
       </Skeleton>
     </Wrapper>
   );

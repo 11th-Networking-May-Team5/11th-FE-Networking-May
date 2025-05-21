@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { postAuthLogin } from '../../apis/Auth/authLogin';
+import useAuth from '../../hooks/useAuth';
 
 interface LoginMessageProps {
   $error: boolean;
@@ -10,6 +11,8 @@ const SidebarLogin = () => {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const loginFormRef = React.useRef<HTMLFormElement>(null);
+
+  const { isLogin, refetch: authRefetch } = useAuth();
 
   /**
    *
@@ -29,8 +32,12 @@ const SidebarLogin = () => {
 
     setErrorMessage(null);
 
-    window.location.reload();
+    authRefetch();
   };
+
+  if (isLogin) {
+    return null;
+  }
 
   return (
     <LoginWrapper>
@@ -115,4 +122,4 @@ const LoginMessage = styled.span<LoginMessageProps>`
   padding: 4px;
 `;
 
-export default SidebarLogin;
+export default React.memo(SidebarLogin);

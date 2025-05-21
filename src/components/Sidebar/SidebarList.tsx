@@ -13,7 +13,7 @@ const SidebarList = () => {
 
   const { locations, addLocation, removeLocation } = useLocations();
   const { selectedLocation, setSelectedLocation } = useLocationStore();
-  const { username } = useAuth();
+  const { username, isLogin } = useAuth();
 
   /**
    *
@@ -22,6 +22,10 @@ const SidebarList = () => {
     addLocation(location);
     setIsModalOpen(false);
   };
+
+  if (!isLogin) {
+    return null;
+  }
 
   return (
     <>

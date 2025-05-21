@@ -7,7 +7,7 @@ const AUTH_CACHE_TIME = 1000 * 60 * 60;
 const useAuth = () => {
   const cachedUsername = localStorage.getItem('username');
 
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['auth', 'check'],
     queryFn: getAuthCheck,
     staleTime: AUTH_CACHE_TIME,
@@ -40,7 +40,8 @@ const useAuth = () => {
   return {
     isLogin: !!cachedUsername || !!newUsername,
     isLoading: isPending,
-    username: cachedUsername || newUsername || null,
+    username: newUsername || cachedUsername || null,
+    refetch,
   };
 };
 
