@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
 import WeatherTime from './components/WeatherTime/WeatherTime';
@@ -7,10 +7,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 
 const App = () => {
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+
+  const handleSelectLocation = (location: string | null) => {
+    setSelectedLocation(location);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <Wrapper>
-        <Sidebar />
+        <Sidebar
+          selectedLocation={selectedLocation}
+          onSelectLocation={handleSelectLocation}
+        />
         <MainContaier>
           <WeatherTime />
         </MainContaier>
@@ -25,7 +34,7 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 
-const MainContaier = styled.div`
+const MainContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
