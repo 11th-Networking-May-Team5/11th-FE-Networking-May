@@ -8,7 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import Skeleton from '../common/Skeleton';
 
 const Sidebar = () => {
-  const { isLogin, isLoading, username } = useAuth();
+  const { isLogin, isLoading } = useAuth();
 
   /**
    *

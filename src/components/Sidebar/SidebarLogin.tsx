@@ -63,7 +63,7 @@ const LoginHeader = styled.h2`
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  margin: 0;
+  margin: 0 2px;
 `;
 
 const LoginForm = styled.form`
@@ -71,7 +71,7 @@ const LoginForm = styled.form`
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  margin-top: 24px;
+  margin-top: 20px;
 `;
 
 const LoginInput = styled.input`
