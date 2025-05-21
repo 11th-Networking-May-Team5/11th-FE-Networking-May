@@ -12,6 +12,7 @@ const useAuth = () => {
     queryFn: getAuthCheck,
     staleTime: AUTH_CACHE_TIME,
     gcTime: AUTH_CACHE_TIME,
+    retry: 0,
   });
 
   const { username: newUsername } = data || {};
