@@ -2,7 +2,7 @@ import React from 'react';
 import WeatherBox from '../common/WeatherBox';
 import useWeatherLocation from '../../hooks/useWeatherLocation';
 import { useQuery } from '@tanstack/react-query';
-import { getWeaherHourly } from '../../apis/Weather/WeatherHourly';
+import { getWeatherHourly } from '../../apis/Weather/WeatherHourly';
 import Skeleton from '../common/Skeleton';
 import WeatherTimeChart from './WeatherTimeChart';
 
@@ -14,7 +14,7 @@ const WeatherTime = () => {
 
   const { data, isPending } = useQuery({
     queryKey: ['weather', 'hourly', location],
-    queryFn: () => getWeaherHourly(location),
+    queryFn: () => getWeatherHourly(location),
     enabled: !!location,
   });
 
