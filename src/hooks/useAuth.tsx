@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { getAuthCheck } from '../apis/Auth/authCheck';
 
-const AUTH_CACHE_TIME = 1000 * 60 * 60;
+const AUTH_STALE_TIME = 1000 * 60 * 60;
+const AUTH_GC_TIME = Infinity;
 
 const useAuth = () => {
   const cachedUsername = localStorage.getItem('username');
@@ -10,8 +11,8 @@ const useAuth = () => {
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['auth', 'check'],
     queryFn: getAuthCheck,
-    staleTime: AUTH_CACHE_TIME,
-    gcTime: AUTH_CACHE_TIME,
+    staleTime: AUTH_STALE_TIME,
+    gcTime: AUTH_GC_TIME,
     retry: 0,
   });
 
