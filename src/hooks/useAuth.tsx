@@ -7,22 +7,20 @@ const AUTH_CACHE_TIME = 1000 * 60 * 60;
 const useAuth = () => {
   const cachedUsername = localStorage.getItem('username');
 
-  const {
-    data: newUsername,
-    isPending,
-    isError,
-  } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ['auth', 'check'],
     queryFn: getAuthCheck,
     staleTime: AUTH_CACHE_TIME,
     gcTime: AUTH_CACHE_TIME,
   });
 
+  const { username: newUsername } = data || {};
+
   //
   //
   //
   React.useEffect(() => {
-    if (!cachedUsername && newUsername) {
+    if (newUsername && newUsername !== cachedUsername) {
       localStorage.setItem('username', newUsername);
     }
   }, [newUsername, cachedUsername]);
