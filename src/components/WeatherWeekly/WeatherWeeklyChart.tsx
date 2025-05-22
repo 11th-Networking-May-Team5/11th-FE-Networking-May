@@ -74,11 +74,11 @@ const WeatherWeeklyChart = ({ weatherWeeklyList }: WeatherWeeklyListProps) => {
 
 export default WeatherWeeklyChart;
 
-// Styled components
 const List = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 12px;
+  padding: 24px;
 `;
 
 const Item = styled.div`

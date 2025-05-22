@@ -12,7 +12,7 @@ import WeatherWeeklyChart from './WeatherWeeklyChart';
 const WeatherWeekly = () => {
   const { location } = useWeatherLocation();
 
-  const { data: weekly, isPending } = useQuery({
+  const { data: weatherWeeklyList, isPending } = useQuery({
     queryKey: ['weather', 'weekly', location],
     queryFn: () => getWeatherWeekly(location),
     enabled: !!location,
@@ -21,7 +21,9 @@ const WeatherWeekly = () => {
   return (
     <WeatherBox title="주간 예보">
       <Skeleton isLoading={isPending} height="160px" style={{ margin: '12px' }}>
-        {weekly?.length && <WeatherWeeklyChart weatherWeeklyList={weekly} />}
+        {weatherWeeklyList && (
+          <WeatherWeeklyChart weatherWeeklyList={weatherWeeklyList} />
+        )}
       </Skeleton>
     </WeatherBox>
   );
