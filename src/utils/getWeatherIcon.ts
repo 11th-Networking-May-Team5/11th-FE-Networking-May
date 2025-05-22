@@ -1,15 +1,7 @@
 import * as day from '../assets/icons/weather/day';
 import * as night from '../assets/icons/weather/night';
+import type { WeatherType } from '../types/common';
 import { isDayTime } from './isDayTime';
-
-export type WeatherType =
-  | 'Clear'
-  | 'Rain'
-  | 'Drizzle'
-  | 'Snow'
-  | 'Thunderstorm'
-  | 'Clouds'
-  | 'Atmosphere';
 
 const DAY_WEATHER_ICON_MAP: Record<WeatherType, string> = {
   Clear: day.sun,

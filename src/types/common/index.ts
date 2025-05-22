@@ -7,3 +7,12 @@ export interface ILocation {
   latitude: number;
   longitude: number;
 }
+
+export type WeatherType =
+  | 'Clear'
+  | 'Rain'
+  | 'Drizzle'
+  | 'Snow'
+  | 'Thunderstorm'
+  | 'Clouds'
+  | 'Atmosphere';
