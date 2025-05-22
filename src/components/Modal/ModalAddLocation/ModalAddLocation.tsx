@@ -4,14 +4,17 @@ import Modal from '../Modal';
 import ExampleIcon from '../../../assets/icons/Clouds.svg?react';
 import ModalAddLocationSearch from './ModalAddLocationSearch';
 import ModalAddLocationConfirm from './ModalAddLocationConfirm';
-import type { IKakaoSearchResponse } from '../../../types/Locations';
+import type {
+  IKakaoSearchResponse,
+  ILocationRequest,
+} from '../../../types/Locations';
 
 export type IModalAddLocationAddStep = 'search' | 'confirm';
 
 interface ModalAddLocationProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (location: string) => void;
+  onConfirm: (location: ILocationRequest) => void;
 }
 
 const ModalAddLocation = ({
@@ -69,8 +72,14 @@ const ModalAddLocation = ({
    *
    */
   const handleConfirmButtonClick = () => {
-    if (addStep === 'confirm') {
-      console.log(selectedSearchLocation);
+    if (addStep === 'confirm' && selectedSearchLocation) {
+      const addLocation: ILocationRequest = {
+        latitude: Number(selectedSearchLocation.y),
+        longitude: Number(selectedSearchLocation.x),
+        name: selectedSearchLocation.place_name,
+      };
+
+      onConfirm(addLocation);
     }
   };
 

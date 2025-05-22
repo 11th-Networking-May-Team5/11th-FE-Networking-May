@@ -1,17 +1,17 @@
-export interface ILocation {
-  isPinned: boolean;
-  id: number;
+export interface ILocationResponse {
+  isPinned?: boolean;
+  isCurrent: boolean;
+  id?: number;
   latitude: number;
   longitude: number;
   name: string;
 }
 
-export type ICurrentLocation = Pick<
-  ILocation,
-  'latitude' | 'longitude' | 'name'
->;
-
-export type ILocationWithCurrent = ILocation | ICurrentLocation;
+export interface ILocationRequest {
+  latitude: number;
+  longitude: number;
+  name: string;
+}
 
 export interface IKakaoSearchResponse {
   id: number;

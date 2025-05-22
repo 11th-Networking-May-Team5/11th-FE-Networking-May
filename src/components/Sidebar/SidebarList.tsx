@@ -4,22 +4,39 @@ import useLocations from '../../hooks/useLocations.tsx';
 import ModalAddLocation from '../Modal/ModalAddLocation/ModalAddLocation.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
-import { useLocationStore } from '../../stores/useLocationStore.tsx';
 import useAuth from '../../hooks/useUser.tsx';
 import SidebarLogout from './SidebarLogout.tsx';
+import type {
+  ILocationRequest,
+  ILocationResponse,
+} from '../../types/Locations/index.ts';
 
 const SidebarList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { locations, addLocation, removeLocation } = useLocations();
-  const { selectedLocation, setSelectedLocation } = useLocationStore();
+  const {
+    locations,
+    addLocation,
+    deleteLocation,
+    selectedLocation,
+    selectLocation,
+  } = useLocations();
+
   const { username, isLogin } = useAuth();
 
   /**
    *
    */
-  const handleAddLocation = (location: string) => {
+  const handleAddLocation = (location: ILocationRequest) => {
     addLocation(location);
+    setIsModalOpen(false);
+  };
+
+  /**
+   *
+   */
+  const handleDeleteLocation = (location: ILocationResponse) => {
+    deleteLocation(location);
     setIsModalOpen(false);
   };
 
@@ -39,13 +56,13 @@ const SidebarList = () => {
         <span>{username}님이 추가한 장소</span>
       </ListDescription>
       <LocationList>
-        {locations.map(location => (
+        {locations?.map(location => (
           <SidebarListItem
-            key={location}
+            key={location?.id ?? location.name}
             location={location}
             isSelected={selectedLocation === location}
-            onClick={() => setSelectedLocation(location)}
-            onDelete={() => removeLocation(location)}
+            onClick={() => selectLocation(location)}
+            onDelete={() => handleDeleteLocation(location)}
           />
         ))}
       </LocationList>

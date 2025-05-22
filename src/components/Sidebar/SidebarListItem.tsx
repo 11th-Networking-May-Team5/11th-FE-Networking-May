@@ -4,9 +4,10 @@ import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
 import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
 import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
 import DeleteModal from '../Modal/DeleteModal';
+import type { ILocationResponse } from '../../types/Locations';
 
 interface SidebarListItemProps {
-  location: string;
+  location: ILocationResponse;
   isSelected?: boolean;
   onClick?: () => void;
   onDelete: () => void;
@@ -18,18 +19,14 @@ const SidebarListItem = ({
   onClick,
   onDelete,
 }: SidebarListItemProps) => {
-  const [pinnedLocation, setPinnedLocation] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const isPinned = pinnedLocation === location;
 
   /**
    *
    */
   const handlePinClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setPinnedLocation(isPinned ? null : location);
   };
 
   /**
@@ -65,13 +62,13 @@ const SidebarListItem = ({
       >
         <Content>
           <PinButton onClick={handlePinClick}>
-            {isPinned ? (
+            {location?.isPinned ? (
               <PinColorIcon width={24} height={24} />
             ) : (
               <PinIcon width={24} height={24} />
             )}
           </PinButton>
-          <Text>{location}</Text>
+          <Text>{location.name}</Text>
         </Content>
 
         {isHovered && (
@@ -83,7 +80,7 @@ const SidebarListItem = ({
 
       <DeleteModal
         open={showModal}
-        locationName={location}
+        locationName={location.name}
         onCancel={handleCancel}
         onConfirm={handleConfirmDelete}
       />
