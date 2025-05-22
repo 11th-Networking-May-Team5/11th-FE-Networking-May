@@ -4,7 +4,7 @@ import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import SidebarList from './SidebarList';
 import { SIDEBAR_WIDTH } from '../../constans';
 import SidebarLogin from './SidebarLogin';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/useUser';
 import Skeleton from '../common/Skeleton';
 
 const Sidebar = () => {

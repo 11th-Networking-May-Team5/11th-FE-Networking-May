@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { postAuthLogin } from '../../apis/Auth/authLogin';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/useUser';
 
 interface LoginMessageProps {
   $error: boolean;

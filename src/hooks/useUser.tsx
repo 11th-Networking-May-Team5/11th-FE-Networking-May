@@ -5,7 +5,7 @@ import { getAuthCheck } from '../apis/Auth/authCheck';
 const AUTH_STALE_TIME = 1000 * 60 * 60;
 const AUTH_GC_TIME = Infinity;
 
-const useAuth = () => {
+const useUser = () => {
   const cachedUsername = localStorage.getItem('username');
 
   const { data, isPending, isError, refetch } = useQuery({
@@ -46,4 +46,4 @@ const useAuth = () => {
   };
 };
 
-export default useAuth;
+export default useUser;

@@ -5,7 +5,7 @@ import AddLocationModal from '../Modal/AddLocationModal.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
 import { useLocationStore } from '../../stores/useLocationStore.tsx';
-import useAuth from '../../hooks/useAuth.tsx';
+import useAuth from '../../hooks/useUser.tsx';
 import SidebarLogout from './SidebarLogout.tsx';
 
 const SidebarList = () => {
