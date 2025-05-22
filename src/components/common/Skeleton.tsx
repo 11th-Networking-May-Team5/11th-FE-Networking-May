@@ -16,7 +16,7 @@ interface SkeletonBoxProps {
   height?: string;
 }
 
-const skeletonVariants = {
+const SKELETON_VARIANT = {
   shimmer: {
     opacity: [0.6, 1, 0.6],
     transition: {
@@ -47,6 +47,9 @@ const Skeleton = ({
   const [isElapsedMinDuration, setIsElapsedMinDuration] = React.useState(false);
   const [isSkeletonVisible, setIsSkeletonVisible] = React.useState(true);
 
+  //
+  //
+  //
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       setIsElapsedMinDuration(true);
@@ -57,11 +60,12 @@ const Skeleton = ({
     };
   }, [minDuration]);
 
+  //
+  //
+  //
   React.useEffect(() => {
     if (!isLoading && isElapsedMinDuration) {
       setIsSkeletonVisible(false);
-    } else {
-      setIsSkeletonVisible(true);
     }
   }, [isLoading, isElapsedMinDuration]);
 
@@ -73,7 +77,7 @@ const Skeleton = ({
     <SkeletonBox
       width={width}
       height={height}
-      variants={skeletonVariants}
+      variants={SKELETON_VARIANT}
       animate="shimmer"
       style={style}
     />

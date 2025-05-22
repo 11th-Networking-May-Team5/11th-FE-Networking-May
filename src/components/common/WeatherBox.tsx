@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Skeleton from './Skeleton';
 
 interface WeatherBoxProps {
   children: React.ReactNode;
@@ -9,7 +10,14 @@ interface WeatherBoxProps {
 const WeatherBox = ({ children, title }: WeatherBoxProps) => {
   return (
     <Box>
-      <BoxTitle>{title}</BoxTitle>
+      <Skeleton
+        isLoading={false}
+        width="160px"
+        height="32px"
+        style={{ marginLeft: '12px' }}
+      >
+        <BoxTitle>{title}</BoxTitle>
+      </Skeleton>
       {children}
     </Box>
   );
