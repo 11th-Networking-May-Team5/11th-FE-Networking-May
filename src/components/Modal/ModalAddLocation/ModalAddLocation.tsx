@@ -46,7 +46,7 @@ export default ModalAddLocation;
 const ModalContainer = styled.div`
   display: flex;
   width: 480px;
-  height: 600px;
+  height: 500px;
   flex-direction: column;
   justify-content: center;
 `;
@@ -54,7 +54,7 @@ const ModalContainer = styled.div`
 const TitleRow = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   gap: 16px;
 `;
 

@@ -10,7 +10,13 @@ const ModalAddLocationSearch = () => {
   const mockResults = [
     { name: 'KFC 광화문점', address: '서울 종로구 세종로 161-1' },
     { name: 'KFC 부산서면점', address: '부산 부산진구 부전동 241-17' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
   ];
 
   const filteredResults = mockResults.filter(item =>
@@ -57,30 +63,25 @@ const ModalAddLocationSearch = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  flex: 1;
+  height: 0;
+  flex-grow: 1;
   flex-direction: column;
   align-items: stretch;
-  justify-content: center;
 `;
 
 const ResultList = styled.div`
   display: flex;
-  flex: 1;
   flex-direction: column;
-  height: 240px;
-  padding: 8px 16px;
-  gap: 16px;
-  border-radius: 8px;
-  border: 1px solid #a4a4a4;
-  overflow-y: auto;
+  padding: 12px;
+  gap: 4px;
+  overflow: scroll;
 `;
 
 const ResultItem = styled.div<{ $selected: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  border-bottom: 1px solid #a4a4a4;
+  padding: 12px 0;
   cursor: pointer;
   position: relative;
 `;
