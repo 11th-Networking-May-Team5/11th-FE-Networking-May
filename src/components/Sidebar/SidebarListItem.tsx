@@ -5,28 +5,45 @@ import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
 import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
 import DeleteModal from '../Modal/DeleteModal';
 import type { ILocationResponse } from '../../types/Locations';
+import useLocations from '../../hooks/useLocations';
 
 interface SidebarListItemProps {
   location: ILocationResponse;
   isSelected?: boolean;
-  onClick?: () => void;
-  onDelete: () => void;
 }
 
 const SidebarListItem = ({
   location,
   isSelected = false,
-  onClick,
-  onDelete,
 }: SidebarListItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const { deleteLocation, pinLocation, unpinLocation, selectLocation } =
+    useLocations();
+
+  /**
+   *
+   */
+  const handleClick = () => {
+    selectLocation(location);
+  };
 
   /**
    *
    */
   const handlePinClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    if (location?.isPinned === undefined) {
+      return;
+    }
+
+    if (location.isPinned) {
+      unpinLocation(location);
+    } else {
+      pinLocation(location);
+    }
   };
 
   /**
@@ -41,7 +58,7 @@ const SidebarListItem = ({
    *
    */
   const handleConfirmDelete = () => {
-    onDelete();
+    deleteLocation(location);
     setShowModal(false);
   };
 
@@ -56,7 +73,7 @@ const SidebarListItem = ({
     <>
       <Item
         $selected={isSelected}
-        onClick={onClick}
+        onClick={handleClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

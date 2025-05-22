@@ -6,21 +6,12 @@ import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
 import useAuth from '../../hooks/useUser.tsx';
 import SidebarLogout from './SidebarLogout.tsx';
-import type {
-  ILocationRequest,
-  ILocationResponse,
-} from '../../types/Locations/index.ts';
+import type { ILocationRequest } from '../../types/Locations/index.ts';
 
 const SidebarList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {
-    locations,
-    addLocation,
-    deleteLocation,
-    selectedLocation,
-    selectLocation,
-  } = useLocations();
+  const { locations, addLocation, selectedLocation } = useLocations();
 
   const { username, isLogin } = useAuth();
 
@@ -29,14 +20,6 @@ const SidebarList = () => {
    */
   const handleAddLocation = (location: ILocationRequest) => {
     addLocation(location);
-    setIsModalOpen(false);
-  };
-
-  /**
-   *
-   */
-  const handleDeleteLocation = (location: ILocationResponse) => {
-    deleteLocation(location);
     setIsModalOpen(false);
   };
 
@@ -61,8 +44,6 @@ const SidebarList = () => {
             key={location?.id ?? location.name}
             location={location}
             isSelected={selectedLocation === location}
-            onClick={() => selectLocation(location)}
-            onDelete={() => handleDeleteLocation(location)}
           />
         ))}
       </LocationList>
