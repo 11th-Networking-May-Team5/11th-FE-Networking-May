@@ -21,3 +21,15 @@ export const deleteLocation = async (location: ILocationResponse) => {
 
   return res.data.data;
 };
+
+export const postLocationPin = async (location: ILocationResponse) => {
+  const res = await axiosInstance.post(`/locations/${location.id}/pin`);
+
+  return res.data.data;
+};
+
+export const deleteLocationPin = async (location: ILocationResponse) => {
+  const res = await axiosInstance.delete(`/locations/${location.id}/pin`);
+
+  return res.data.data;
+};
