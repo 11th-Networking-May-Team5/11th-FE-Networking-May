@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import Modal from '../Modal';
 import ExampleIcon from '../../../assets/icons/Clouds.svg?react';
 import ModalAddLocationSearch from './ModalAddLocationSearch';
+import ModalAddLocationConfirm from './ModalAddLocationConfirm';
 
-export type ModalAddLocationStep = 'search' | 'confirm';
+type ModalAddLocationStep = 'search' | 'confirm';
 
 interface ModalAddLocationProps {
   isOpen: boolean;
@@ -17,6 +18,8 @@ const ModalAddLocation = ({
   onClose,
   onConfirm,
 }: ModalAddLocationProps) => {
+  const [step, setStep] = React.useState<ModalAddLocationStep>('confirm');
+
   if (!isOpen) {
     return null;
   }
@@ -31,7 +34,10 @@ const ModalAddLocation = ({
           <TitleText>날씨 위치 추가</TitleText>
         </TitleRow>
 
-        <ModalAddLocationSearch />
+        <FlexGrowerContainer>
+          {step === 'search' && <ModalAddLocationSearch />}
+          {step === 'confirm' && <ModalAddLocationConfirm />}
+        </FlexGrowerContainer>
 
         <ButtonWrapper>
           <ConfirmButton onClick={() => {}}>확인</ConfirmButton>
@@ -71,6 +77,14 @@ const TitleText = styled.h2`
   font-family: Pretendard;
   font-size: 32px;
   font-weight: 700;
+`;
+
+const FlexGrowerContainer = styled.div`
+  display: flex;
+  height: 0;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: stretch;
 `;
 
 const ButtonWrapper = styled.div`

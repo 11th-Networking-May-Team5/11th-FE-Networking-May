@@ -31,13 +31,12 @@ const ModalAddLocationSearch = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <InputField
         placeholder="장소의 키워드를 입력해주세요."
         value={keyword}
         onChange={handleKeywordChange}
       />
-
       <ResultList>
         {filteredResults.map(item => (
           <ResultItem
@@ -57,17 +56,9 @@ const ModalAddLocationSearch = () => {
           </ResultItem>
         ))}
       </ResultList>
-    </Wrapper>
+    </>
   );
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  height: 0;
-  flex-grow: 1;
-  flex-direction: column;
-  align-items: stretch;
-`;
 
 const ResultList = styled.div`
   display: flex;
