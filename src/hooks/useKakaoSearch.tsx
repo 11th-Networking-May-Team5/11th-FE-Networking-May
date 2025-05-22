@@ -33,6 +33,7 @@ interface UseKakaoSearchProps {
 }
 
 interface UseKakaoSearchReturn {
+  isLoading: boolean;
   searchResults: IKakaoSearchResponse[] | null;
 }
 
@@ -49,6 +50,8 @@ const useKakaoSearch = ({ keyword }: UseKakaoSearchProps) => {
     IKakaoSearchResponse[] | null
   >(null);
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const debouncedValue = useDebounce({ value: keyword });
 
   //
@@ -63,8 +66,11 @@ const useKakaoSearch = ({ keyword }: UseKakaoSearchProps) => {
       return;
     }
 
+    setIsLoading(true);
+
     placeSearchRef.current.keywordSearch(debouncedValue, (result, status) => {
-      console.log(typeof status);
+      setIsLoading(false);
+
       if (status === KAKAO_STATUS.OK) {
         setSearchResults(result);
       } else {
@@ -89,12 +95,11 @@ const useKakaoSearch = ({ keyword }: UseKakaoSearchProps) => {
   }, [placeSearchRef]);
 
   _return.current = {
+    isLoading,
     searchResults,
   };
 
-  return {
-    searchResults,
-  };
+  return _return.current;
 };
 
 export default useKakaoSearch;

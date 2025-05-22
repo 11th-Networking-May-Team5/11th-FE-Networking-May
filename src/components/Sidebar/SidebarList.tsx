@@ -7,13 +7,18 @@ import styled from 'styled-components';
 import useAuth from '../../hooks/useUser.tsx';
 import SidebarLogout from './SidebarLogout.tsx';
 import type { ILocationRequest } from '../../types/Locations/index.ts';
+import useDelayedLoading from '../../hooks/useDelayLoading.tsx';
+import LoadingSpinner from '../common/LoadingSpinner.tsx';
 
 const SidebarList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { locations, addLocation, selectedLocation } = useWeatherLocations();
+  const { isLoading, locations, addLocation, selectedLocation } =
+    useWeatherLocations();
 
   const { username, isLogin } = useAuth();
+
+  const isDelayedLoading = useDelayedLoading({ isLoading });
 
   /**
    *
@@ -38,15 +43,20 @@ const SidebarList = () => {
       <ListDescription>
         <span>{username}님이 추가한 장소</span>
       </ListDescription>
-      <LocationList>
-        {locations?.map(location => (
-          <SidebarListItem
-            key={location?.id ?? location.name}
-            location={location}
-            isSelected={selectedLocation === location}
-          />
-        ))}
-      </LocationList>
+
+      {isDelayedLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <LocationList>
+          {locations?.map(location => (
+            <SidebarListItem
+              key={location?.id ?? location.name}
+              location={location}
+              isSelected={selectedLocation === location}
+            />
+          ))}
+        </LocationList>
+      )}
 
       <SidebarLogout />
 

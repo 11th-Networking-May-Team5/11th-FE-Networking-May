@@ -5,6 +5,8 @@ import InputField from '../../common/InputField';
 import useKakaoSearch from '../../../hooks/useKakaoSearch';
 import type { IKakaoSearchResponse } from '../../../types/Locations';
 import type { IModalAddLocationAddStep } from './ModalAddLocation';
+import useDelayedLoading from '../../../hooks/useDelayLoading';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 interface ModalAddLocationSearchProps {
   addStep: IModalAddLocationAddStep;
@@ -19,7 +21,9 @@ const ModalAddLocationSearch = ({
 }: ModalAddLocationSearchProps) => {
   const [keyword, setKeyword] = React.useState('');
 
-  const { searchResults } = useKakaoSearch({ keyword });
+  const { isLoading, searchResults } = useKakaoSearch({ keyword });
+
+  const delayedLoading = useDelayedLoading({ isLoading });
 
   /**
    *
@@ -37,6 +41,37 @@ const ModalAddLocationSearch = ({
     } else {
       onSelectedSearchLocation(location);
     }
+  };
+
+  /**
+   *
+   */
+  const renderResultList = () => {
+    if (delayedLoading) {
+      return <LoadingSpinner />;
+    }
+
+    return (
+      <ResultList>
+        {searchResults?.map(result => (
+          <ResultItem
+            key={result.id}
+            $selected={result.id === selectedSearchLocation?.id}
+            onClick={() => handleLocationSelect(result)}
+          >
+            <div>
+              <ItemName>{result.place_name}</ItemName>
+              <ItemAddress>{result.road_address_name}</ItemAddress>
+            </div>
+            {selectedSearchLocation?.id === result.id && (
+              <CheckMark>
+                <CheckIcon width={36} height={36} />
+              </CheckMark>
+            )}
+          </ResultItem>
+        ))}
+      </ResultList>
+    );
   };
 
   //
@@ -57,7 +92,7 @@ const ModalAddLocationSearch = ({
         value={keyword}
         onChange={handleKeywordChange}
       />
-      <ResultList>
+      {/* <ResultList>
         {searchResults?.map(result => (
           <ResultItem
             key={result.id}
@@ -75,7 +110,8 @@ const ModalAddLocationSearch = ({
             )}
           </ResultItem>
         ))}
-      </ResultList>
+      </ResultList> */}
+      {renderResultList()}
     </>
   );
 };
