@@ -10,13 +10,13 @@ const ModalAddLocationSearch = () => {
   const mockResults = [
     { name: 'KFC 광화문점', address: '서울 종로구 세종로 161-1' },
     { name: 'KFC 부산서면점', address: '부산 부산진구 부전동 241-17' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    // { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
+    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
   ];
 
   const filteredResults = mockResults.filter(item =>

@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDom from 'react-dom';
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -12,12 +13,30 @@ interface ModalProps {
 }
 
 const Modal = ({ open, children, onClose, showDeleteButton }: ModalProps) => {
+  const overlayRef = React.useRef<HTMLDivElement>(null);
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
   if (!open) {
     return null;
   }
 
   return ReactDom.createPortal(
-    <Overlay onClick={onClose}>
+    <Overlay onClick={onClose} ref={overlayRef}>
       <ModalWrapper
         onClick={e => e.stopPropagation()}
         initial={{ scale: 0.95, opacity: 0 }}
