@@ -20,6 +20,33 @@ const ModalAddLocation = ({
 }: ModalAddLocationProps) => {
   const [step, setStep] = React.useState<ModalAddLocationStep>('confirm');
 
+  /**
+   *
+   */
+  const handlePrevButtonClick = () => {
+    if (step === 'confirm') {
+      setStep('search');
+    }
+  };
+
+  /**
+   *
+   */
+  const handleNextButtonClick = () => {
+    if (step === 'search') {
+      setStep('confirm');
+    }
+  };
+
+  /**
+   *
+   */
+  const handleConfirmButtonClick = () => {
+    if (step === 'confirm') {
+      onConfirm('');
+    }
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -40,7 +67,19 @@ const ModalAddLocation = ({
         </FlexGrowerContainer>
 
         <ButtonWrapper>
-          <ConfirmButton onClick={() => {}}>확인</ConfirmButton>
+          {step === 'confirm' ? (
+            <ConfirmButton onClick={handlePrevButtonClick}>이전</ConfirmButton>
+          ) : (
+            <div />
+          )}
+          {step === 'search' && (
+            <ConfirmButton onClick={handleNextButtonClick}>다음</ConfirmButton>
+          )}
+          {step === 'confirm' && (
+            <ConfirmButton onClick={handleConfirmButtonClick}>
+              확인
+            </ConfirmButton>
+          )}
         </ButtonWrapper>
       </ModalContainer>
     </Modal>
@@ -89,7 +128,7 @@ const FlexGrowerContainer = styled.div`
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 24px;
 `;
 
