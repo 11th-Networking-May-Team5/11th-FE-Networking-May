@@ -2,26 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import CheckIcon from '../../../assets/icons/tick-front-color.svg?react';
 import InputField from '../../common/InputField';
+import useKakaoSearch from '../../../hooks/useKakaoSearch';
+import type { IKakaoSearchResponse } from '../../../types/common';
+import type { IModalAddLocationAddStep } from './ModalAddLocation';
 
-const ModalAddLocationSearch = () => {
+interface ModalAddLocationSearchProps {
+  addStep: IModalAddLocationAddStep;
+  selectedSearchLocation: IKakaoSearchResponse | null;
+  onSelectedSearchLocation: (location: IKakaoSearchResponse | null) => void;
+}
+
+const ModalAddLocationSearch = ({
+  addStep,
+  selectedSearchLocation,
+  onSelectedSearchLocation,
+}: ModalAddLocationSearchProps) => {
   const [keyword, setKeyword] = React.useState('');
-  const [selectedName, setSelectedName] = React.useState<string | null>(null);
 
-  const mockResults = [
-    { name: 'KFC 광화문점', address: '서울 종로구 세종로 161-1' },
-    { name: 'KFC 부산서면점', address: '부산 부산진구 부전동 241-17' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-    { name: 'KFC 홍익대점', address: '서울 마포구 동교동 165-8' },
-  ];
-
-  const filteredResults = mockResults.filter(item =>
-    item.name.toLowerCase().includes(keyword.toLowerCase()),
-  );
+  const { searchResults } = useKakaoSearch({ keyword });
 
   /**
    *
@@ -29,6 +27,28 @@ const ModalAddLocationSearch = () => {
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
+
+  /**
+   *
+   */
+  const handleLocationSelect = (location: IKakaoSearchResponse) => {
+    if (location.id === selectedSearchLocation?.id) {
+      onSelectedSearchLocation(null);
+    } else {
+      onSelectedSearchLocation(location);
+    }
+  };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    onSelectedSearchLocation(null);
+  }, [searchResults]);
+
+  if (addStep !== 'search') {
+    return null;
+  }
 
   return (
     <>
@@ -38,17 +58,17 @@ const ModalAddLocationSearch = () => {
         onChange={handleKeywordChange}
       />
       <ResultList>
-        {filteredResults.map(item => (
+        {searchResults?.map(result => (
           <ResultItem
-            key={item.name}
-            $selected={selectedName === item.name}
-            onClick={() => setSelectedName(item.name)}
+            key={result.id}
+            $selected={result.id === selectedSearchLocation?.id}
+            onClick={() => handleLocationSelect(result)}
           >
             <div>
-              <ItemName>{item.name}</ItemName>
-              <ItemAddress>{item.address}</ItemAddress>
+              <ItemName>{result.place_name}</ItemName>
+              <ItemAddress>{result.road_address_name}</ItemAddress>
             </div>
-            {selectedName === item.name && (
+            {selectedSearchLocation?.id === result.id && (
               <CheckMark>
                 <CheckIcon width={36} height={36} />
               </CheckMark>

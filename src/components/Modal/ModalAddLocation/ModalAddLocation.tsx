@@ -4,8 +4,9 @@ import Modal from '../Modal';
 import ExampleIcon from '../../../assets/icons/Clouds.svg?react';
 import ModalAddLocationSearch from './ModalAddLocationSearch';
 import ModalAddLocationConfirm from './ModalAddLocationConfirm';
+import type { IKakaoSearchResponse } from '../../../types/common';
 
-type ModalAddLocationStep = 'search' | 'confirm';
+export type IModalAddLocationAddStep = 'search' | 'confirm';
 
 interface ModalAddLocationProps {
   isOpen: boolean;
@@ -18,14 +19,40 @@ const ModalAddLocation = ({
   onClose,
   onConfirm,
 }: ModalAddLocationProps) => {
-  const [step, setStep] = React.useState<ModalAddLocationStep>('confirm');
+  const [addStep, setAddStep] =
+    React.useState<IModalAddLocationAddStep>('search');
+  const [selectedSearchLocation, setSelectedSearchLocation] =
+    React.useState<IKakaoSearchResponse | null>(null);
+
+  /**
+   *
+   */
+  const handleLocationSelect = (location: IKakaoSearchResponse | null) => {
+    setSelectedSearchLocation(location);
+  };
+
+  /**
+   *
+   */
+  const handleLocationNameChange = (name: string) => {
+    setSelectedSearchLocation(prev => {
+      if (!prev) {
+        return null;
+      }
+
+      return {
+        ...prev,
+        place_name: name,
+      };
+    });
+  };
 
   /**
    *
    */
   const handlePrevButtonClick = () => {
-    if (step === 'confirm') {
-      setStep('search');
+    if (addStep === 'confirm') {
+      setAddStep('search');
     }
   };
 
@@ -33,8 +60,8 @@ const ModalAddLocation = ({
    *
    */
   const handleNextButtonClick = () => {
-    if (step === 'search') {
-      setStep('confirm');
+    if (addStep === 'search') {
+      setAddStep('confirm');
     }
   };
 
@@ -42,8 +69,8 @@ const ModalAddLocation = ({
    *
    */
   const handleConfirmButtonClick = () => {
-    if (step === 'confirm') {
-      onConfirm('');
+    if (addStep === 'confirm') {
+      console.log(selectedSearchLocation);
     }
   };
 
@@ -62,20 +89,30 @@ const ModalAddLocation = ({
         </TitleRow>
 
         <FlexGrowerContainer>
-          {step === 'search' && <ModalAddLocationSearch />}
-          {step === 'confirm' && <ModalAddLocationConfirm />}
+          <ModalAddLocationSearch
+            addStep={addStep}
+            selectedSearchLocation={selectedSearchLocation}
+            onSelectedSearchLocation={handleLocationSelect}
+          />
+          <ModalAddLocationConfirm
+            addStep={addStep}
+            selectedSearchLocationName={
+              selectedSearchLocation?.place_name || ''
+            }
+            onLocationNameChange={handleLocationNameChange}
+          />
         </FlexGrowerContainer>
 
         <ButtonWrapper>
-          {step === 'confirm' ? (
+          {addStep === 'confirm' ? (
             <ConfirmButton onClick={handlePrevButtonClick}>이전</ConfirmButton>
           ) : (
             <div />
           )}
-          {step === 'search' && (
+          {addStep === 'search' && (
             <ConfirmButton onClick={handleNextButtonClick}>다음</ConfirmButton>
           )}
-          {step === 'confirm' && (
+          {addStep === 'confirm' && (
             <ConfirmButton onClick={handleConfirmButtonClick}>
               확인
             </ConfirmButton>
