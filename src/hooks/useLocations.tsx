@@ -7,16 +7,17 @@ import {
   postLocationPin,
   deleteLocationPin,
 } from '../apis/Locations/locations';
-import type { ILocationResponse } from '../types/Locations';
+import type { ILocationRequest, ILocationResponse } from '../types/Locations';
 import useCurrentLocation from './useCurrentLocation';
 import { useSelectedLocationStore } from '../stores/useSelectedLocationStore';
 import { locationSort } from '../utils/locationSort';
+import useUser from './useUser';
 
 interface UseLocationsReturn {
   isLoading: boolean;
   locations?: ILocationResponse[];
   selectedLocation?: ILocationResponse | null;
-  addLocation: (location: ILocationResponse) => void;
+  addLocation: (location: ILocationRequest) => void;
   deleteLocation: (location: ILocationResponse) => void;
   pinLocation: (location: ILocationResponse) => void;
   unpinLocation: (location: ILocationResponse) => void;
@@ -38,10 +39,13 @@ const useLocations = () => {
 
   const { selectedLocation, setSelectedLocation } = useSelectedLocationStore();
 
+  const { isLogin } = useUser();
+
   const { data: locations, isPending } = useQuery<ILocationResponse[]>({
     queryKey: ['locations'],
     queryFn: getLocations,
     retry: 1,
+    enabled: isLogin,
     staleTime: LOCATION_STALE_TIME,
     gcTime: LOCATION_GC_TIME,
   });
@@ -196,6 +200,7 @@ const useLocations = () => {
     );
 
     setLocationsWithCurrent([currentLocation, ...sortedLocations]);
+    setSelectedLocation(currentLocation);
   }, [locations, currentLocation]);
 
   _return.current = {
