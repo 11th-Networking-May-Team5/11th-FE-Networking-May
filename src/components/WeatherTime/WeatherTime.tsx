@@ -6,12 +6,17 @@ import { getWeatherHourly } from '../../apis/Weather/WeatherHourly';
 import Skeleton from '../common/Skeleton';
 import WeatherTimeChart from './WeatherTimeChart';
 import type { ILocationResponse } from '../../types/Locations';
+import useWeatherLocations from '../../hooks/useWeatherLocations';
 
 /**
  * 시간별 날씨 현황 라인 차트
  */
 const WeatherTime = () => {
-  const { currentLocation: location } = useCurrentLocation();
+  const { currentLocation } = useCurrentLocation();
+
+  const { selectedLocation } = useWeatherLocations();
+
+  const location = selectedLocation ?? currentLocation;
 
   const { data, isPending } = useQuery({
     queryKey: ['weather', 'hourly', location],

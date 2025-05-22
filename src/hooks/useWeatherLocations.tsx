@@ -13,7 +13,7 @@ import { useSelectedLocationStore } from '../stores/useSelectedLocationStore';
 import { locationSort } from '../utils/locationSort';
 import useUser from './useUser';
 
-interface UseLocationsReturn {
+interface UseWeatherLocationsReturn {
   isLoading: boolean;
   locations?: ILocationResponse[];
   selectedLocation?: ILocationResponse | null;
@@ -27,8 +27,10 @@ interface UseLocationsReturn {
 const LOCATION_STALE_TIME = 1000 * 60 * 60;
 const LOCATION_GC_TIME = Infinity;
 
-const useLocations = () => {
-  const _return = React.useRef<UseLocationsReturn>({} as UseLocationsReturn);
+const useWeatherLocations = () => {
+  const _return = React.useRef<UseWeatherLocationsReturn>(
+    {} as UseWeatherLocationsReturn,
+  );
 
   const queryClient = useQueryClient();
 
@@ -217,4 +219,4 @@ const useLocations = () => {
   return _return.current;
 };
 
-export default useLocations;
+export default useWeatherLocations;

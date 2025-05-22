@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
-import useLocations from '../../hooks/useLocations.tsx';
+import useWeatherLocations from '../../hooks/useWeatherLocations.tsx';
 import ModalAddLocation from '../Modal/ModalAddLocation/ModalAddLocation.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import type { ILocationRequest } from '../../types/Locations/index.ts';
 const SidebarList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { locations, addLocation, selectedLocation } = useLocations();
+  const { locations, addLocation, selectedLocation } = useWeatherLocations();
 
   const { username, isLogin } = useAuth();
 

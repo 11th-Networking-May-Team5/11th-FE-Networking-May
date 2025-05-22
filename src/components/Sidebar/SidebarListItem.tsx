@@ -3,24 +3,32 @@ import styled from 'styled-components';
 import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
 import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
 import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
+import LocationIcon from '../../assets/icons/location.svg?react';
 import DeleteModal from '../Modal/DeleteModal';
 import type { ILocationResponse } from '../../types/Locations';
-import useLocations from '../../hooks/useLocations';
+import useWeatherLocations from '../../hooks/useWeatherLocations';
 
 interface SidebarListItemProps {
   location: ILocationResponse;
   isSelected?: boolean;
 }
 
-const SidebarListItem = ({
-  location,
-  isSelected = false,
-}: SidebarListItemProps) => {
+const SidebarListItem = ({ location }: SidebarListItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const { deleteLocation, pinLocation, unpinLocation, selectLocation } =
-    useLocations();
+  const {
+    deleteLocation,
+    pinLocation,
+    unpinLocation,
+    selectedLocation,
+    selectLocation,
+  } = useWeatherLocations();
+
+  const isSelected = [
+    location.isCurrent && selectedLocation?.isCurrent,
+    selectedLocation?.id === location.id,
+  ].some(Boolean);
 
   /**
    *
@@ -69,6 +77,21 @@ const SidebarListItem = ({
     setShowModal(false);
   };
 
+  /**
+   *
+   */
+  const renderIcon = () => {
+    if (location?.isCurrent) {
+      return <LocationIcon width={24} height={24} />;
+    }
+
+    return location?.isPinned ? (
+      <PinColorIcon width={24} height={24} />
+    ) : (
+      <PinIcon width={24} height={24} />
+    );
+  };
+
   return (
     <>
       <Item
@@ -78,17 +101,11 @@ const SidebarListItem = ({
         onMouseLeave={() => setIsHovered(false)}
       >
         <Content>
-          <PinButton onClick={handlePinClick}>
-            {location?.isPinned ? (
-              <PinColorIcon width={24} height={24} />
-            ) : (
-              <PinIcon width={24} height={24} />
-            )}
-          </PinButton>
+          <PinButton onClick={handlePinClick}>{renderIcon()}</PinButton>
           <Text>{location.name}</Text>
         </Content>
 
-        {isHovered && (
+        {isHovered && !location.isCurrent && (
           <DeleteButton onClick={handleDeleteClick}>
             <TrashIcon width={24} height={24} />
           </DeleteButton>
