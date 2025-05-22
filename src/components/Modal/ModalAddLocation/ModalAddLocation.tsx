@@ -23,30 +23,39 @@ const ModalAddLocation = ({
 
   return (
     <Modal open={isOpen} onClose={onClose} showDeleteButton>
-      <TitleRow>
-        <StyledIcon>
-          <ExampleIcon />
-        </StyledIcon>
-        <TitleText>날씨 위치 추가</TitleText>
-      </TitleRow>
+      <ModalContainer>
+        <TitleRow>
+          <StyledIcon>
+            <ExampleIcon />
+          </StyledIcon>
+          <TitleText>날씨 위치 추가</TitleText>
+        </TitleRow>
 
-      <ModalAddLocationSearch />
+        <ModalAddLocationSearch />
 
-      <ButtonWrapper>
-        <ConfirmButton onClick={() => {}}>확인</ConfirmButton>
-      </ButtonWrapper>
+        <ButtonWrapper>
+          <ConfirmButton onClick={() => {}}>확인</ConfirmButton>
+        </ButtonWrapper>
+      </ModalContainer>
     </Modal>
   );
 };
 
 export default ModalAddLocation;
 
-const TitleRow = styled.div`
+const ModalContainer = styled.div`
+  display: flex;
   width: 480px;
+  height: 600px;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const TitleRow = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 24px;
   gap: 16px;
-  margin-bottom: 48px;
 `;
 
 const StyledIcon = styled.div`
@@ -71,9 +80,11 @@ const ButtonWrapper = styled.div`
 `;
 
 const ConfirmButton = styled.button`
-  padding: 6px 30px;
+  padding: 8px 28px;
   border-radius: 6px;
   background: #292e2e;
+  font-size: 14px;
+  font-weight: 500;
   color: white;
   border: none;
   cursor: pointer;

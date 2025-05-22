@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchIcon from '../../../assets/icons/zoom-front-color.svg?react';
 import CheckIcon from '../../../assets/icons/tick-front-color.svg?react';
+import InputField from '../../common/InputField';
 
 const ModalAddLocationSearch = () => {
   const [keyword, setKeyword] = React.useState('');
@@ -17,23 +17,20 @@ const ModalAddLocationSearch = () => {
     item.name.toLowerCase().includes(keyword.toLowerCase()),
   );
 
-  const selected = mockResults.find(item => item.name === selectedName);
+  /**
+   *
+   */
+  const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
 
   return (
-    <div>
-      <InputField>
-        <Label>장소 이름</Label>
-        <InputFieldRow>
-          <Input
-            placeholder="장소를 입력해주세요."
-            value={keyword}
-            onChange={e => setKeyword(e.target.value)}
-          />
-          <StyledSmallIcon>
-            <SearchIcon />
-          </StyledSmallIcon>
-        </InputFieldRow>
-      </InputField>
+    <Wrapper>
+      <InputField
+        placeholder="장소의 키워드를 입력해주세요."
+        value={keyword}
+        onChange={handleKeywordChange}
+      />
 
       <ResultList>
         {filteredResults.map(item => (
@@ -54,51 +51,21 @@ const ModalAddLocationSearch = () => {
           </ResultItem>
         ))}
       </ResultList>
-    </div>
+    </Wrapper>
   );
 };
 
-const InputField = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 48px 0;
-`;
-
-const Label = styled.label`
-  color: #292e2e;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 600;
-`;
-
-const InputFieldRow = styled.div`
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
-`;
-
-const Input = styled.input`
   flex: 1;
-  padding: 4px 8px;
-  border: none;
-  color: #a4a4a4;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 400;
-  outline: none;
-`;
-
-const StyledSmallIcon = styled.div`
-  width: 24px;
-  height: 24px;
-  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   justify-content: center;
-  align-items: center;
 `;
 
 const ResultList = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   height: 240px;
   padding: 8px 16px;
