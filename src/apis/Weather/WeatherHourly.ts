@@ -1,4 +1,4 @@
-import type { ILocation } from '../../types/common';
+import type { ILocation } from '../../types/Locations';
 import { axiosInstance } from '../axiosInstance';
 
 export const getWeatherHourly = async (location?: ILocation) => {

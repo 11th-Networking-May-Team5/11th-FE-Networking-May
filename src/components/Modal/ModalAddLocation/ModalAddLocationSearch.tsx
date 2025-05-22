@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CheckIcon from '../../../assets/icons/tick-front-color.svg?react';
 import InputField from '../../common/InputField';
 import useKakaoSearch from '../../../hooks/useKakaoSearch';
-import type { IKakaoSearchResponse } from '../../../types/common';
+import type { IKakaoSearchResponse } from '../../../types/Locations';
 import type { IModalAddLocationAddStep } from './ModalAddLocation';
 
 interface ModalAddLocationSearchProps {

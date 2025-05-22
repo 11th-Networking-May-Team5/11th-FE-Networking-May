@@ -4,7 +4,7 @@ import Modal from '../Modal';
 import ExampleIcon from '../../../assets/icons/Clouds.svg?react';
 import ModalAddLocationSearch from './ModalAddLocationSearch';
 import ModalAddLocationConfirm from './ModalAddLocationConfirm';
-import type { IKakaoSearchResponse } from '../../../types/common';
+import type { IKakaoSearchResponse } from '../../../types/Locations';
 
 export type IModalAddLocationAddStep = 'search' | 'confirm';
 

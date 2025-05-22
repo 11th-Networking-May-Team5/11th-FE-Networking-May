@@ -1,6 +1,6 @@
 import React from 'react';
 import useDebounce from './useDebounce';
-import type { IKakaoSearchResponse } from '../types/common';
+import type { IKakaoSearchResponse } from '../types/Locations';
 
 const KAKAO_STATUS = {
   OK: 'OK',

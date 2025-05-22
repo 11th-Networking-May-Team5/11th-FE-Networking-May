@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
-import useLocations from '../../hooks/useLocation.tsx';
+import useLocations from '../../hooks/useLocations.tsx';
 import ModalAddLocation from '../Modal/ModalAddLocation/ModalAddLocation.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';

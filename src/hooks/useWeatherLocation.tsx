@@ -1,9 +1,9 @@
 import React from 'react';
-import type { ILocation } from '../types/common';
+import type { ILocation, ILocationWithCurrent } from '../types/Locations';
 
 interface IUuseWeatherLocationReturn {
   isLoading: boolean;
-  location: ILocation | undefined;
+  location?: ILocationWithCurrent;
 }
 
 /**
