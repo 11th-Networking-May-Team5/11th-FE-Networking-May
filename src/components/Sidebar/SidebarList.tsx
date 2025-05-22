@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
 import useLocations from '../../hooks/useLocation.tsx';
-import AddLocationModal from '../Modal/AddLocationModal.tsx';
+import ModalAddLocation from '../Modal/ModalAddLocation/ModalAddLocation.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
 import { useLocationStore } from '../../stores/useLocationStore.tsx';
@@ -52,7 +52,7 @@ const SidebarList = () => {
 
       <SidebarLogout />
 
-      <AddLocationModal
+      <ModalAddLocation
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleAddLocation}

@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Modal from './Modal';
+import Modal from '../Modal';
 import SearchIcon from '../../assets/icons/zoom-front-color.svg?react';
 import CheckIcon from '../../assets/icons/tick-front-color.svg?react';
 import ExampleIcon from '../../assets/icons/Clouds.svg?react';
 
-interface AddLocationModalProps {
+interface ModalAddLocationProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: (location: string) => void;
 }
 
-const AddLocationModal = ({
+const ModalAddLocation = ({
   isOpen,
   onClose,
   onConfirm,
-}: AddLocationModalProps) => {
+}: ModalAddLocationProps) => {
   const [keyword, setKeyword] = useState('');
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
@@ -91,7 +91,7 @@ const AddLocationModal = ({
   );
 };
 
-export default AddLocationModal;
+export default ModalAddLocation;
 
 const TitleRow = styled.div`
   width: 480px;
