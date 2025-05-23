@@ -12,23 +12,23 @@ const useDelayedLoading = ({
   isLoading,
   delay = 600,
 }: UseDelayedLoadingProps) => {
-  const [showLoading, setShowLoading] = React.useState(true);
+  const [isTimeLoading, setIsTimeLoading] = React.useState(true);
 
   React.useEffect(() => {
     let timeout: number | undefined;
 
     if (!isLoading) {
       timeout = setTimeout(() => {
-        setShowLoading(false);
+        setIsTimeLoading(true);
       }, delay);
     } else {
-      setShowLoading(true);
+      setIsTimeLoading(false);
     }
 
     return () => clearTimeout(timeout);
   }, [isLoading, delay]);
 
-  return showLoading || isLoading;
+  return isTimeLoading || isLoading;
 };
 
 export default useDelayedLoading;
