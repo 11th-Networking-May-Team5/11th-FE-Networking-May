@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
-import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
-import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
+import pinIcon from '../../assets/icons/pin-front-clay.png';
+import pinColorIcon from '../../assets/icons/pin-front-color.png';
+import trashIcon from '../../assets/icons/trash-can-front-color.png';
 import LocationIcon from '../../assets/icons/location.svg?react';
 import DeleteModal from '../Modal/DeleteModal';
 import type { ILocationResponse } from '../../types/Locations';
@@ -86,9 +86,14 @@ const SidebarListItem = ({ location }: SidebarListItemProps) => {
     }
 
     return location?.isPinned ? (
-      <PinColorIcon width={24} height={24} />
-    ) : (
-      <PinIcon width={24} height={24} />
+          <PinButton onClick={handlePinClick}>
+            {isPinned ? (
+              <SmallIcon src={pinColorIcon} alt="pin" />
+            ) : (
+              <SmallIcon src={pinIcon} alt="un-pin" />
+            )}
+          </PinButton>
+          <Text>{location}</Text>
     );
   };
 
@@ -107,7 +112,7 @@ const SidebarListItem = ({ location }: SidebarListItemProps) => {
 
         {isHovered && !location.isCurrent && (
           <DeleteButton onClick={handleDeleteClick}>
-            <TrashIcon width={24} height={24} />
+            <SmallIcon src={trashIcon} alt="trash" />
           </DeleteButton>
         )}
       </Item>
@@ -149,6 +154,11 @@ const Content = styled.div`
   padding: 8px;
   align-items: center;
   gap: 12px;
+`;
+
+const SmallIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;
 
 const PinButton = styled.button`

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
 import WeatherTime from './components/WeatherTime/WeatherTime';

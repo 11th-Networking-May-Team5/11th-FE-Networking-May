@@ -5,7 +5,6 @@ import mkcert from 'vite-plugin-mkcert';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // 환경 변수 불러오기 (필요시)
   const env = loadEnv(mode, process.cwd());
 
   return {
