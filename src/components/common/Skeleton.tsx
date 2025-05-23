@@ -44,15 +44,17 @@ const Skeleton = ({
   children,
   style,
 }: SkeletonProps) => {
-  const [isElapsedMinDuration, setIsElapsedMinDuration] = React.useState(false);
+  const [isDelayEnd, setIsDelayEnd] = React.useState(false);
   const [isSkeletonVisible, setIsSkeletonVisible] = React.useState(true);
 
   //
   //
   //
   React.useEffect(() => {
+    setIsDelayEnd(false);
+
     const timeout = setTimeout(() => {
-      setIsElapsedMinDuration(true);
+      setIsDelayEnd(true);
     }, minDuration);
 
     return () => {
@@ -64,10 +66,10 @@ const Skeleton = ({
   //
   //
   React.useEffect(() => {
-    if (!isLoading && isElapsedMinDuration) {
+    if (!isLoading && isDelayEnd) {
       setIsSkeletonVisible(false);
     }
-  }, [isLoading, isElapsedMinDuration]);
+  }, [isLoading, isDelayEnd]);
 
   if (!isSkeletonVisible) {
     return children;

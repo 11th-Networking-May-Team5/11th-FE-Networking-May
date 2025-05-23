@@ -192,7 +192,9 @@ const useWeatherLocations = () => {
   //
   //
   React.useEffect(() => {
-    if (!locations || !currentLocation) return;
+    if (!locations || !currentLocation) {
+      return;
+    }
 
     const sortedLocations = locationSort(
       locations.map(location => ({
@@ -206,7 +208,7 @@ const useWeatherLocations = () => {
   }, [locations, currentLocation]);
 
   _return.current = {
-    isLoading: isPending || !locationsWithCurrent,
+    isLoading: isPending,
     locations: locationsWithCurrent,
     selectedLocation,
     addLocation: addLocationMutation.mutate,
