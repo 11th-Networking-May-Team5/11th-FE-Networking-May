@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchIcon from '../../assets/icons/zoom-front-color.svg?react';
+import zoomIcon from '../../assets/icons/zoom-front-color.png';
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -23,9 +23,7 @@ const InputField = ({ label, description, ...props }: InputFieldProps) => {
       {description && <Description>{description}</Description>}
       <InputFieldRow>
         <Input {...props} />
-        <StyledSmallIcon>
-          <SearchIcon />
-        </StyledSmallIcon>
+        <StyledSmallIcon src={zoomIcon} alt="zoom" />
       </InputFieldRow>
     </InputFieldWrapper>
   );
@@ -72,12 +70,9 @@ const Input = styled.input`
   }
 `;
 
-const StyledSmallIcon = styled.div`
+const StyledSmallIcon = styled.img`
   width: 24px;
   height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export default InputField;

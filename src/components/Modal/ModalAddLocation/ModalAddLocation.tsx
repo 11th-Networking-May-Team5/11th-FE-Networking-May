@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
-import ExampleIcon from '../../../assets/icons/Clouds.svg?react';
+import { clouds } from '../../../assets/icons/weather/day';
 import ModalAddLocationSearch from './ModalAddLocationSearch';
 import ModalAddLocationConfirm from './ModalAddLocationConfirm';
 import type {
@@ -91,9 +91,7 @@ const ModalAddLocation = ({
     <Modal open={isOpen} onClose={onClose} showDeleteButton>
       <ModalContainer>
         <TitleRow>
-          <StyledIcon>
-            <ExampleIcon />
-          </StyledIcon>
+          <StyledIcon src={clouds} alt="clouds" />
           <TitleText>날씨 위치 추가</TitleText>
         </TitleRow>
 
@@ -149,12 +147,9 @@ const TitleRow = styled.div`
   gap: 16px;
 `;
 
-const StyledIcon = styled.div`
+const StyledIcon = styled.img`
   width: 80px;
   height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const TitleText = styled.h2`

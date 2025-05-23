@@ -86,14 +86,9 @@ const SidebarListItem = ({ location }: SidebarListItemProps) => {
     }
 
     return location?.isPinned ? (
-          <PinButton onClick={handlePinClick}>
-            {isPinned ? (
-              <SmallIcon src={pinColorIcon} alt="pin" />
-            ) : (
-              <SmallIcon src={pinIcon} alt="un-pin" />
-            )}
-          </PinButton>
-          <Text>{location}</Text>
+      <SmallIcon src={pinColorIcon} alt="pin" />
+    ) : (
+      <SmallIcon src={pinIcon} alt="un-pin" />
     );
   };
 

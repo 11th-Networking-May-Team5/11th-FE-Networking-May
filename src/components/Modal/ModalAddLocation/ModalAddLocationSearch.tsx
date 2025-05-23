@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CheckIcon from '../../../assets/icons/tick-front-color.svg?react';
+import tickIcon from '../../../assets/icons/tick-front-color.png';
 import InputField from '../../common/InputField';
 import useKakaoSearch from '../../../hooks/useKakaoSearch';
 import type { IKakaoSearchResponse } from '../../../types/Locations';
@@ -65,7 +65,7 @@ const ModalAddLocationSearch = ({
             </div>
             {selectedSearchLocation?.id === result.id && (
               <CheckMark>
-                <CheckIcon width={36} height={36} />
+                <img src={tickIcon} alt="tick" />
               </CheckMark>
             )}
           </ResultItem>
@@ -92,25 +92,6 @@ const ModalAddLocationSearch = ({
         value={keyword}
         onChange={handleKeywordChange}
       />
-      {/* <ResultList>
-        {searchResults?.map(result => (
-          <ResultItem
-            key={result.id}
-            $selected={result.id === selectedSearchLocation?.id}
-            onClick={() => handleLocationSelect(result)}
-          >
-            <div>
-              <ItemName>{result.place_name}</ItemName>
-              <ItemAddress>{result.road_address_name}</ItemAddress>
-            </div>
-            {selectedSearchLocation?.id === result.id && (
-              <CheckMark>
-                <CheckIcon width={36} height={36} />
-              </CheckMark>
-            )}
-          </ResultItem>
-        ))}
-      </ResultList> */}
       {renderResultList()}
     </>
   );
@@ -151,6 +132,11 @@ const CheckMark = styled.div`
   position: absolute;
   right: 8px;
   bottom: 7.5px;
+
+  > img {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 export default ModalAddLocationSearch;
