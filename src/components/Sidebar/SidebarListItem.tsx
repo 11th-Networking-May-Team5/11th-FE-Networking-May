@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
-import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
-import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
+import pinIcon from '../../assets/icons/pin-front-clay.png';
+import pinColorIcon from '../../assets/icons/pin-front-color.png';
+import trashIcon from '../../assets/icons/trash-can-front-color.png';
 import DeleteModal from '../Modal/DeleteModal';
 
 interface SidebarListItemProps {
@@ -66,9 +66,9 @@ const SidebarListItem = ({
         <Content>
           <PinButton onClick={handlePinClick}>
             {isPinned ? (
-              <PinColorIcon width={24} height={24} />
+              <SmallIcon src={pinColorIcon} alt="pin" />
             ) : (
-              <PinIcon width={24} height={24} />
+              <SmallIcon src={pinIcon} alt="un-pin" />
             )}
           </PinButton>
           <Text>{location}</Text>
@@ -76,7 +76,7 @@ const SidebarListItem = ({
 
         {isHovered && (
           <DeleteButton onClick={handleDeleteClick}>
-            <TrashIcon width={24} height={24} />
+            <SmallIcon src={trashIcon} alt="trash" />
           </DeleteButton>
         )}
       </Item>
@@ -118,6 +118,11 @@ const Content = styled.div`
   padding: 8px;
   align-items: center;
   gap: 12px;
+`;
+
+const SmallIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;
 
 const PinButton = styled.button`

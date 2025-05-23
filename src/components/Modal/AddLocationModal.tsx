@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
-import SearchIcon from '../../assets/icons/zoom-front-color.svg?react';
-import CheckIcon from '../../assets/icons/tick-front-color.svg?react';
-import ExampleIcon from '../../assets/icons/Clouds.svg?react';
+import zoomIcon from '../../assets/icons/zoom-front-color.png';
+import checkIcon from '../../assets/icons/tick-front-color.png';
+import { clouds } from '../../assets/icons/weather/day';
 
 interface AddLocationModalProps {
   isOpen: boolean;
@@ -36,9 +36,7 @@ const AddLocationModal = ({
   return (
     <Modal open={isOpen} onClose={onClose} showDeleteButton>
       <TitleRow>
-        <StyledIcon>
-          <ExampleIcon />
-        </StyledIcon>
+        <StyledIcon src={clouds} alt="clouds" />
         <TitleText>날씨 위치 추가</TitleText>
       </TitleRow>
 
@@ -50,9 +48,7 @@ const AddLocationModal = ({
             value={keyword}
             onChange={e => setKeyword(e.target.value)}
           />
-          <StyledSmallIcon>
-            <SearchIcon />
-          </StyledSmallIcon>
+          <StyledSmallIcon src={zoomIcon} alt="zoom" />
         </InputFieldRow>
       </InputField>
 
@@ -69,7 +65,7 @@ const AddLocationModal = ({
             </div>
             {selectedName === item.name && (
               <CheckMark>
-                <CheckIcon width={36} height={36} />
+                <img src={checkIcon} alt="check" />
               </CheckMark>
             )}
           </ResultItem>
@@ -101,12 +97,9 @@ const TitleRow = styled.div`
   margin-bottom: 48px;
 `;
 
-const StyledIcon = styled.div`
+const StyledIcon = styled.img`
   width: 80px;
   height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const TitleText = styled.h2`
@@ -147,12 +140,9 @@ const Input = styled.input`
   outline: none;
 `;
 
-const StyledSmallIcon = styled.div`
+const StyledSmallIcon = styled.img`
   width: 24px;
   height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const ResultList = styled.div`
@@ -194,6 +184,11 @@ const CheckMark = styled.div`
   position: absolute;
   right: 8px;
   bottom: 7.5px;
+
+  > img {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const ButtonWrapper = styled.div`
