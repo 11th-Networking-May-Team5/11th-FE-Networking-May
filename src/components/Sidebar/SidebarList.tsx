@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
 import useLocations from '../../hooks/useLocation.tsx';
 import AddLocationModal from '../Modal/AddLocationModal.tsx';

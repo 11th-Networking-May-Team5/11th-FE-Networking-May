@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
 import SidebarList from './SidebarList';

@@ -1,4 +1,3 @@
-import React from 'react';
 import WeatherBox from '../common/WeatherBox';
 import useWeatherLocation from '../../hooks/useWeatherLocation';
 import { useQuery } from '@tanstack/react-query';
