@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import WeatherTime from './components/WeatherTime/WeatherTime';
 import WeatherWeekly from './components/WeatherWeekly/WeatherWeekly';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import WeatherDaily from './components/WeatherDaily/WeatherDaily';
 
 const queryClient = new QueryClient();
 
@@ -12,6 +13,7 @@ const App = () => {
       <Wrapper>
         <Sidebar />
         <MainContainer>
+          <WeatherDaily />
           <WeatherTime />
           <WeatherWeekly />
         </MainContainer>
