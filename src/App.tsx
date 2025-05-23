@@ -33,10 +33,12 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 24px;
   min-height: 100vh;
+  height: 100%;
   padding: 24px;
+  overflow-y: scroll;
 `;
 
 export default App;
