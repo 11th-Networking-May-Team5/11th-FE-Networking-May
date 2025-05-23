@@ -1,10 +1,11 @@
 import React from 'react';
 import { Line, LineChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
-import { getWeatherIcon, type WeatherType } from '../../utils/getWeatherIcon';
+import { getWeatherIcon } from '../../utils/getWeatherIcon';
 import Chevron from '../../assets/icons/chevron.svg?react';
 import useOverflowSlide from '../../hooks/useOverflowSlide';
 import type { IHourlyWeather } from '../../types/WeatherTime';
+import type { WeatherType } from '../../types/common';
 
 interface WeatherTimeChartProps {
   weatherHourlyList: IHourlyWeather[];

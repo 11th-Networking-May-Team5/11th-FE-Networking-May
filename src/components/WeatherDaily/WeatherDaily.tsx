@@ -1,5 +1,5 @@
 import WeatherBox from '../common/WeatherBox';
-import useWeatherLocation from '../../hooks/useWeatherLocation';
+import useWeatherLocations from '../../hooks/useWeatherLocations';
 import { useQuery } from '@tanstack/react-query';
 import Skeleton from '../common/Skeleton';
 import { getWeatherDaily } from '../../apis/Weather/weatherDaily';
@@ -10,9 +10,14 @@ import { isDayTime } from '../../utils/isDayTime';
 import { WEATHER_TO_KOREAN } from '../../constans';
 import type { WeatherType } from '../../types/common';
 import WeatherDailyStatusBox from './WeatherDailyStatusBox';
+import useCurrentLocation from '../../hooks/useCurrentLocation';
 
 const WeatherDaily = () => {
-  const { location } = useWeatherLocation();
+  const { selectedLocation } = useWeatherLocations();
+
+  const { currentLocation } = useCurrentLocation();
+
+  const location = selectedLocation ?? currentLocation;
 
   const { data: dailyWeather, isPending } = useQuery<IWeatherDailyResponse>({
     queryKey: ['weather', 'daily', location],

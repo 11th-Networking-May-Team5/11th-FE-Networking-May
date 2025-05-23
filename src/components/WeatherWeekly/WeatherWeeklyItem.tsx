@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { getWeatherIcon, type WeatherType } from '../../utils/getWeatherIcon';
+import { getWeatherIcon } from '../../utils/getWeatherIcon';
 import type { IWeeklyWeatherItem } from '../../types/WeatherWeekly';
+import type { WeatherType } from '../../types/common';
 
 interface Props {
   item: IWeeklyWeatherItem;
