@@ -5,8 +5,8 @@ const SidebarLogout = () => {
   /**
    *
    */
-  const handleLogout = () => {
-    postAuthLogout();
+  const handleLogout = async () => {
+    await postAuthLogout();
 
     localStorage.removeItem('username');
     window.location.reload();
