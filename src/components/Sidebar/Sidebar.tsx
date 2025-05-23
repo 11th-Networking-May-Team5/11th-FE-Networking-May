@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MapIcon from '../../assets/icons/map-pin-front-color.svg?react';
+import mapPin from '../../assets/icons/map-pin-front-color.png';
 import SidebarList from './SidebarList';
 import { SIDEBAR_WIDTH } from '../../constans';
 import SidebarLogin from './SidebarLogin';
@@ -20,9 +20,7 @@ const Sidebar = () => {
         style={{ margin: '8px 16px' }}
       >
         <TitleRow>
-          <StyledIcon>
-            <MapIcon />
-          </StyledIcon>
+          <StyledIcon src={mapPin} alt="map-pin" />
           <TitleText>위치 목록</TitleText>
         </TitleRow>
         <SidebarLogin />
@@ -56,12 +54,9 @@ const TitleText = styled.div`
   font-weight: 700;
 `;
 
-const StyledIcon = styled.div`
+const StyledIcon = styled.img`
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export default Sidebar;

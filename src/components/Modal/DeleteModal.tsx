@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Modal from './Modal';
-import WarningIcon from '../../assets/icons/Snow.svg?react';
+import { storm } from '../../assets/icons/weather/night';
 
 interface DeleteModalProps {
   open: boolean;
@@ -14,9 +14,7 @@ const DeleteModal = ({ open, onCancel, onConfirm }: DeleteModalProps) => {
     <Modal open={open} onClose={onCancel} showDeleteButton={false}>
       <Wrapper>
         <ModalTitle>정말로 삭제하시겠습니까?</ModalTitle>
-        <IconWrapper>
-          <WarningIcon width={160} height={160} />
-        </IconWrapper>
+        <Icon src={storm} alt="storm" />
         <ButtonRow>
           <CancelButton onClick={onCancel}>취소하기</CancelButton>
           <DeleteButton onClick={onConfirm}>삭제하기</DeleteButton>
@@ -43,12 +41,9 @@ const Wrapper = styled.div`
   gap: 24px;
 `;
 
-const IconWrapper = styled.div`
-  display: flex;
+const Icon = styled.img`
   width: 160px;
   height: 160px;
-  justify-content: center;
-  align-items: center;
 `;
 
 const ButtonRow = styled.div`

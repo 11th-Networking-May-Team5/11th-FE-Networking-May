@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
+import PlusIcon from '../../assets/icons/plus-front-clay.png';
 import useLocations from '../../hooks/useLocation.tsx';
 import AddLocationModal from '../Modal/AddLocationModal.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
@@ -30,9 +30,7 @@ const SidebarList = () => {
   return (
     <>
       <AddRow onClick={() => setIsModalOpen(true)}>
-        <StyledIcon>
-          <PlusIcon />
-        </StyledIcon>
+        <StyledIcon src={PlusIcon} alt="plus" />
         <TitleText>추가하기</TitleText>
       </AddRow>
       <ListDescription>
@@ -98,12 +96,9 @@ const TitleText = styled.div`
   font-weight: 700;
 `;
 
-const StyledIcon = styled.div`
+const StyledIcon = styled.img`
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export default SidebarList;
