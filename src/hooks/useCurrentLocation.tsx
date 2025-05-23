@@ -85,7 +85,7 @@ const useCurrentLocation = () => {
     currentLocation: location,
     currentLoacationAddress: locationAddress,
   };
-
+  console.log('currentLocation', _return.current);
   return _return.current;
 };
 
