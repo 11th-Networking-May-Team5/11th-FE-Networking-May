@@ -7,13 +7,17 @@ interface Props {
   item: IWeeklyWeatherItem;
 }
 
-const WeatherWeeklyItem = ({ item }: Props) => {
-  const date = new Date(item.date);
-  const dayOfWeek = date.toLocaleDateString('ko-KR', {
-    weekday: 'short',
-  });
-  const mmdd = `${date.getMonth() + 1}.${date.getDate()}`;
+const formatDateInfo = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return {
+    isToday: new Date().toDateString() === date.toDateString(),
+    mmdd: `${date.getMonth() + 1}.${date.getDate()}`,
+    dayOfWeek: date.toLocaleDateString('ko-KR', { weekday: 'short' }),
+  };
+};
 
+const WeatherWeeklyItem = ({ item }: Props) => {
+  const { isToday, mmdd, dayOfWeek } = formatDateInfo(item.date);
   const slots = [
     {
       label: '오전',
@@ -32,22 +36,19 @@ const WeatherWeeklyItem = ({ item }: Props) => {
   return (
     <Item>
       <IconGroup>
-        {slots.map((slot, i) => {
+        {slots.map(({ data, hour, label, isAfternoon }, index) => {
           const dateWithTime = new Date(item.date);
-          dateWithTime.setHours(slot.hour);
+          dateWithTime.setHours(hour);
 
           return (
-            <IconBox key={i}>
+            <IconBox key={index}>
               <WeatherIcon
-                src={getWeatherIcon(
-                  slot.data.weather as WeatherType,
-                  dateWithTime,
-                )}
+                src={getWeatherIcon(data.weather as WeatherType, dateWithTime)}
               />
-              <HumidityText>{slot.data.humidity}%</HumidityText>
-              <LabelText>{slot.label}</LabelText>
-              <TempText $isAfternoon={slot.isAfternoon}>
-                {slot.data.temp.toFixed(1)}°
+              <HumidityText>{data.humidity}%</HumidityText>
+              <LabelText>{label}</LabelText>
+              <TempText $isAfternoon={isAfternoon}>
+                {data.temp.toFixed(1)}°
               </TempText>
             </IconBox>
           );
@@ -55,7 +56,7 @@ const WeatherWeeklyItem = ({ item }: Props) => {
       </IconGroup>
 
       <BottomDate>
-        {dayOfWeek === '오늘' ? '오늘' : dayOfWeek}
+        {isToday ? '오늘' : dayOfWeek}
         <br />
         {mmdd}
       </BottomDate>
