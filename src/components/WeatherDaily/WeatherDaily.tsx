@@ -15,7 +15,7 @@ import useCurrentLocation from '../../hooks/useCurrentLocation';
 const WeatherDaily = () => {
   const { selectedLocation } = useWeatherLocations();
 
-  const { currentLocation } = useCurrentLocation();
+  const { currentLocation, currentLoacationAddress } = useCurrentLocation();
 
   const location = selectedLocation ?? currentLocation;
 
@@ -27,7 +27,11 @@ const WeatherDaily = () => {
 
   const date = new Date();
 
-  const title = `${date.getMonth() + 1}월 ${date.getDate()}일 날씨 현황`;
+  const locationName = location?.isCurrent
+    ? currentLoacationAddress
+    : selectedLocation?.name;
+
+  const title = `${date.getMonth() + 1}월 ${date.getDate()}일 ${locationName ?? ''} 날씨 현황`;
 
   /**
    *
@@ -136,7 +140,7 @@ const WeatherDaily = () => {
 
   return (
     <WeatherBox title={title}>
-      <Skeleton isLoading={isPending} height="120px" style={{ margin: '12px' }}>
+      <Skeleton isLoading={isPending} height="360px" style={{ margin: '12px' }}>
         <WeatherDailyContainer>
           {renderIconAndTemp()}
           {renderWeatherInfo()}
