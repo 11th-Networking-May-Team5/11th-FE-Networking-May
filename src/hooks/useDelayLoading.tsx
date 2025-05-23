@@ -15,7 +15,7 @@ const useDelayedLoading = ({
   const [isTimeLoading, setIsTimeLoading] = React.useState(true);
 
   React.useEffect(() => {
-    let timeout: number | undefined;
+    let timeout: NodeJS.Timeout;
 
     if (!isLoading) {
       timeout = setTimeout(() => {
