@@ -26,10 +26,9 @@ const WeatherDaily = () => {
   });
 
   const date = new Date();
-
-  const locationName = location?.isCurrent
-    ? currentLoacationAddress
-    : selectedLocation?.name;
+  const locationName = !location?.isCurrent
+    ? selectedLocation?.name
+    : currentLoacationAddress;
 
   const title = `${date.getMonth() + 1}월 ${date.getDate()}일 ${locationName ?? ''} 날씨 현황`;
 
