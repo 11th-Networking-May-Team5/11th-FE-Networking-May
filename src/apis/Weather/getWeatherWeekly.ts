@@ -1,10 +1,7 @@
-import type { ILocation } from '../../types/common';
-import type { IWeeklyWeatherItem } from '../../types/WeatherWeekly';
+import type { ILocationResponse } from '../../types/Locations';
 import { axiosInstance } from '../axiosInstance';
 
-export const getWeatherWeekly = async (
-  location?: ILocation,
-): Promise<IWeeklyWeatherItem[]> => {
+export const getWeatherWeekly = async (location?: ILocationResponse) => {
   const res = await axiosInstance.get('/weather/weekly', {
     params: {
       latitude: location?.latitude,
@@ -12,5 +9,5 @@ export const getWeatherWeekly = async (
     },
   });
 
-  return res.data.weekly;
+  return res.data.data;
 };

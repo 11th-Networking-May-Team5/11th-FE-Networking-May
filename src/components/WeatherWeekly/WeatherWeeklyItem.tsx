@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { getWeatherIcon, type WeatherType } from '../../utils/getWeatherIcon';
 import type { IWeeklyWeatherItem } from '../../types/WeatherWeekly';
