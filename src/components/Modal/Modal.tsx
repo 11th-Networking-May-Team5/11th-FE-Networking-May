@@ -13,8 +13,6 @@ interface ModalProps {
 }
 
 const Modal = ({ open, children, onClose, showDeleteButton }: ModalProps) => {
-  const overlayRef = React.useRef<HTMLDivElement>(null);
-
   //
   //
   //
@@ -36,7 +34,7 @@ const Modal = ({ open, children, onClose, showDeleteButton }: ModalProps) => {
   }
 
   return ReactDom.createPortal(
-    <Overlay onClick={onClose} ref={overlayRef}>
+    <Overlay onClick={onClose}>
       <ModalWrapper
         onClick={e => e.stopPropagation()}
         initial={{ scale: 0.95, opacity: 0 }}
