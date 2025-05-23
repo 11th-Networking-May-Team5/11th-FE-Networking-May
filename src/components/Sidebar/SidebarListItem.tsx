@@ -1,35 +1,57 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import PinIcon from '../../assets/icons/pin-front-clay.svg?react';
-import PinColorIcon from '../../assets/icons/pin-front-color.svg?react';
-import TrashIcon from '../../assets/icons/trash-can-front-color.svg?react';
+import pinIcon from '../../assets/icons/pin-front-clay.png';
+import pinColorIcon from '../../assets/icons/pin-front-color.png';
+import trashIcon from '../../assets/icons/trash-can-front-color.png';
+import LocationIcon from '../../assets/icons/location.svg?react';
 import DeleteModal from '../Modal/DeleteModal';
+import type { ILocationResponse } from '../../types/Locations';
+import useWeatherLocations from '../../hooks/useWeatherLocations';
 
 interface SidebarListItemProps {
-  location: string;
+  location: ILocationResponse;
   isSelected?: boolean;
-  onClick?: () => void;
-  onDelete: () => void;
 }
 
-const SidebarListItem = ({
-  location,
-  isSelected = false,
-  onClick,
-  onDelete,
-}: SidebarListItemProps) => {
-  const [pinnedLocation, setPinnedLocation] = useState<string | null>(null);
+const SidebarListItem = ({ location }: SidebarListItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const isPinned = pinnedLocation === location;
+  const {
+    deleteLocation,
+    pinLocation,
+    unpinLocation,
+    selectedLocation,
+    selectLocation,
+  } = useWeatherLocations();
+
+  const isSelected = [
+    location.isCurrent && selectedLocation?.isCurrent,
+    selectedLocation?.id === location.id,
+  ].some(Boolean);
+
+  /**
+   *
+   */
+  const handleClick = () => {
+    selectLocation(location);
+  };
 
   /**
    *
    */
   const handlePinClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setPinnedLocation(isPinned ? null : location);
+
+    if (location?.isPinned === undefined) {
+      return;
+    }
+
+    if (location.isPinned) {
+      unpinLocation(location);
+    } else {
+      pinLocation(location);
+    }
   };
 
   /**
@@ -44,7 +66,7 @@ const SidebarListItem = ({
    *
    */
   const handleConfirmDelete = () => {
-    onDelete();
+    deleteLocation(location);
     setShowModal(false);
   };
 
@@ -55,35 +77,44 @@ const SidebarListItem = ({
     setShowModal(false);
   };
 
+  /**
+   *
+   */
+  const renderIcon = () => {
+    if (location?.isCurrent) {
+      return <LocationIcon width={24} height={24} />;
+    }
+
+    return location?.isPinned ? (
+      <SmallIcon src={pinColorIcon} alt="pin" />
+    ) : (
+      <SmallIcon src={pinIcon} alt="un-pin" />
+    );
+  };
+
   return (
     <>
       <Item
         $selected={isSelected}
-        onClick={onClick}
+        onClick={handleClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <Content>
-          <PinButton onClick={handlePinClick}>
-            {isPinned ? (
-              <PinColorIcon width={24} height={24} />
-            ) : (
-              <PinIcon width={24} height={24} />
-            )}
-          </PinButton>
-          <Text>{location}</Text>
+          <PinButton onClick={handlePinClick}>{renderIcon()}</PinButton>
+          <Text>{location.name}</Text>
         </Content>
 
-        {isHovered && (
+        {isHovered && !location.isCurrent && (
           <DeleteButton onClick={handleDeleteClick}>
-            <TrashIcon width={24} height={24} />
+            <SmallIcon src={trashIcon} alt="trash" />
           </DeleteButton>
         )}
       </Item>
 
       <DeleteModal
         open={showModal}
-        locationName={location}
+        locationName={location.name}
         onCancel={handleCancel}
         onConfirm={handleConfirmDelete}
       />
@@ -118,6 +149,11 @@ const Content = styled.div`
   padding: 8px;
   align-items: center;
   gap: 12px;
+`;
+
+const SmallIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;
 
 const PinButton = styled.button`

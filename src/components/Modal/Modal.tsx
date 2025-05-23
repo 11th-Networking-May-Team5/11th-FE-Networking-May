@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDom from 'react-dom';
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -12,6 +13,22 @@ interface ModalProps {
 }
 
 const Modal = ({ open, children, onClose, showDeleteButton }: ModalProps) => {
+  //
+  //
+  //
+  React.useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
   if (!open) {
     return null;
   }

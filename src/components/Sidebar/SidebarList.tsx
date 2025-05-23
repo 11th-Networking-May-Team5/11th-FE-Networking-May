@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
-import PlusIcon from '../../assets/icons/plus-front-clay.svg?react';
-import useLocations from '../../hooks/useLocation.tsx';
-import AddLocationModal from '../Modal/AddLocationModal.tsx';
+import { useState } from 'react';
+import PlusIcon from '../../assets/icons/plus-front-clay.png';
+import useWeatherLocations from '../../hooks/useWeatherLocations.tsx';
+import ModalAddLocation from '../Modal/ModalAddLocation/ModalAddLocation.tsx';
 import SidebarListItem from './SidebarListItem.tsx';
 import styled from 'styled-components';
-import { useLocationStore } from '../../stores/useLocationStore.tsx';
 import useAuth from '../../hooks/useUser.tsx';
 import SidebarLogout from './SidebarLogout.tsx';
+import type { ILocationRequest } from '../../types/Locations/index.ts';
+import useDelayedLoading from '../../hooks/useDelayLoading.tsx';
+import LoadingSpinner from '../common/LoadingSpinner.tsx';
 
 const SidebarList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { locations, addLocation, removeLocation } = useLocations();
-  const { selectedLocation, setSelectedLocation } = useLocationStore();
+  const { isLoading, locations, addLocation, selectedLocation } =
+    useWeatherLocations();
+
   const { username, isLogin } = useAuth();
+
+  const isDelayedLoading = useDelayedLoading({ isLoading });
 
   /**
    *
    */
-  const handleAddLocation = (location: string) => {
+  const handleAddLocation = (location: ILocationRequest) => {
     addLocation(location);
     setIsModalOpen(false);
   };
@@ -30,29 +35,30 @@ const SidebarList = () => {
   return (
     <>
       <AddRow onClick={() => setIsModalOpen(true)}>
-        <StyledIcon>
-          <PlusIcon />
-        </StyledIcon>
+        <StyledIcon src={PlusIcon} alt="plus" />
         <TitleText>추가하기</TitleText>
       </AddRow>
       <ListDescription>
         <span>{username}님이 추가한 장소</span>
       </ListDescription>
-      <LocationList>
-        {locations.map(location => (
-          <SidebarListItem
-            key={location}
-            location={location}
-            isSelected={selectedLocation === location}
-            onClick={() => setSelectedLocation(location)}
-            onDelete={() => removeLocation(location)}
-          />
-        ))}
-      </LocationList>
+
+      {isDelayedLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <LocationList>
+          {locations?.map(location => (
+            <SidebarListItem
+              key={location?.id ?? location.name}
+              location={location}
+              isSelected={selectedLocation === location}
+            />
+          ))}
+        </LocationList>
+      )}
 
       <SidebarLogout />
 
-      <AddLocationModal
+      <ModalAddLocation
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleAddLocation}
@@ -98,12 +104,9 @@ const TitleText = styled.div`
   font-weight: 700;
 `;
 
-const StyledIcon = styled.div`
+const StyledIcon = styled.img`
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export default SidebarList;

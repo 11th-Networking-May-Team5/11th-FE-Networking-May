@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { postAuthLogout } from '../../apis/Auth/authLogout';
 
@@ -6,8 +5,8 @@ const SidebarLogout = () => {
   /**
    *
    */
-  const handleLogout = () => {
-    postAuthLogout();
+  const handleLogout = async () => {
+    await postAuthLogout();
 
     localStorage.removeItem('username');
     window.location.reload();

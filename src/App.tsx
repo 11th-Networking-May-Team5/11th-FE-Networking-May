@@ -1,7 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar/Sidebar';
 import WeatherTime from './components/WeatherTime/WeatherTime';
+import WeatherWeekly from './components/WeatherWeekly/WeatherWeekly';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import WeatherDaily from './components/WeatherDaily/WeatherDaily';
 
@@ -15,6 +15,7 @@ const App = () => {
         <MainContainer>
           <WeatherDaily />
           <WeatherTime />
+          <WeatherWeekly />
         </MainContainer>
       </Wrapper>
     </QueryClientProvider>
