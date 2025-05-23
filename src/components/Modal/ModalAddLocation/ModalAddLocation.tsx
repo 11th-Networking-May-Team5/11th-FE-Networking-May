@@ -80,6 +80,8 @@ const ModalAddLocation = ({
       };
 
       onConfirm(addLocation);
+
+      setAddStep('search');
     }
   };
 
