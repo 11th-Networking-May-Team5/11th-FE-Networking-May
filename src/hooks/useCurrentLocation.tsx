@@ -35,7 +35,12 @@ const useCurrentLocation = () => {
           setIsLoading(false);
         },
         () => {
-          setLocationAddress('');
+          setLocation({
+            isCurrent: true,
+            latitude: 37.496075,
+            longitude: 127.030588,
+          });
+          setLocationAddress('강남구 역삼동');
           setIsLoading(false);
         },
         {
